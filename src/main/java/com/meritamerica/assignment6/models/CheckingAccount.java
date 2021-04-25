@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class CheckingAccount extends BankAccount {
 
     @ManyToOne
-    @JoinColumn(name="account_holders_id", nullable=false)
     private AccountHolder accountHolder;
     
 	public CheckingAccount() {
@@ -21,9 +20,7 @@ public class CheckingAccount extends BankAccount {
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
 	}
-	
-	
-	
+
 /*
     CheckingAccount() {
     	super(0, interestRate);

@@ -3,37 +3,39 @@ package com.meritamerica.assignment6.models;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "account_holders")
-public class AccountHolder {
-	
-	// ------ INSTANCE VARS
+public class AccountHolder implements Comparable<AccountHolder> {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_holder_id")
     private long id;
-    
+
+    @NotEmpty(message = "Please Enter First Name")
     private String firstName;
-    
     private String middleName;
-    
+    @NotEmpty(message = "Please Enter Last Name")
     private String lastName;
-    
+    @NotEmpty(message = "Please Enter SSN")
     @Size(min = 9, max = 11)
     private String ssn;
     
-    @OneToMany(mappedBy = "accountHolder")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CheckingAccount> checkingAccounts;
-    
-    @OneToMany(mappedBy = "accountHolder")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<SavingsAccount> savingsAccounts;
-    
-    @OneToMany(mappedBy = "accountHolder")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CDAccount> cdAccounts;
     
     AccountHolder() {	
-		
+        this.checkingAccounts = new ArrayList<>();
+        this.savingsAccounts = new ArrayList<>();
+        this.cdAccounts = new ArrayList<>();
+
     }
 
     AccountHolder(String firstName, String middleName, String lastName, String ssn) {
@@ -88,7 +90,7 @@ public class AccountHolder {
 	}
 
 	public void setCheckingAccounts(List<CheckingAccount> checkingAccounts) {
-		this.checkingAccounts = new ArrayList<CheckingAccount>(checkingAccounts);
+		this.checkingAccounts = checkingAccounts;
 	}
 
 	public List<SavingsAccount> getSavingsAccounts() {
@@ -96,7 +98,7 @@ public class AccountHolder {
 	}
 
 	public void setSavingsAccounts(List<SavingsAccount> savingsAccounts) {
-		this.savingsAccounts = new ArrayList<SavingsAccount>(savingsAccounts);
+		this.savingsAccounts = savingsAccounts;
 	}
 	
 	public List<CDAccount> getCDAccounts() {
@@ -104,7 +106,7 @@ public class AccountHolder {
 	}
 
 	public void setCDAccounts(List<CDAccount> cdAccounts) {
-		this.cdAccounts = new ArrayList<CDAccount>(cdAccounts);
+		this.cdAccounts = cdAccounts;
 	}
 
     public int getNumberOfCheckingAccounts() {
@@ -165,7 +167,23 @@ public class AccountHolder {
         return getCheckingBalance() + getSavingsBalance() + getCDBalance();
     }
 
+    @Override
+    public int compareTo(AccountHolder otherAccountHolder) {
+        return Double.compare(this.getCombinedBalance(), otherAccountHolder.getCombinedBalance());
+        /*
+         if(this.getCombinedBalance() == otherAccountHolder.getCombinedBalance()) return 0;
+        else if(this.getCombinedBalance() < otherAccountHolder.getCombinedBalance()) return -1;
+        else return 1;
+         */
+
  /*
+
+     public AccountHolder() {
+         this.cdaccountList = new ArrayList<>();
+         this.checkingList = new ArrayList<>();
+         this.savingsList = new ArrayList<>();
+    }
+
     // TODO modify methods to send to a service for handling
     //---------- CHECKING ACCOUNT ----------//
     public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
@@ -308,13 +326,7 @@ public class AccountHolder {
 //        return sb.toString();
 //    }
 
-    @Override
-    public int compareTo(AccountHolder otherAccountHolder) {
-        return Double.compare(this.getCombinedBalance(), otherAccountHolder.getCombinedBalance());
-        /*
-         if(this.getCombinedBalance() == otherAccountHolder.getCombinedBalance()) return 0;
-        else if(this.getCombinedBalance() < otherAccountHolder.getCombinedBalance()) return -1;
-        else return 1;
-         */
+*/
+    }
 }
 

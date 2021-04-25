@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.meritamerica.assignment6.models.AccountHolder;
 
+import java.util.Optional;
+
 @Repository
 public interface AccountHolderRepository extends JpaRepository<AccountHolder, Long>{
-
+    //Optional<AccountHolder> findById(Long id);
 }
