@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.meritamerica.assignment6.models.AccountHolderContactDetails;
 
 @Repository
-public interface AccountHoldersContactDetails extends JpaRepository<AccountHolderContactDetails, Long> {
+public interface AccountHoldersContactDetails extends JpaRepository<AccountHolderContactDetails, Integer> {
 
 }

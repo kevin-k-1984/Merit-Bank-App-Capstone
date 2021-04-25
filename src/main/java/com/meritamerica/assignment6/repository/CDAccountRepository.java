@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.meritamerica.assignment6.models.CDAccount;
 
 @Repository
-public interface CDAccountRepository extends JpaRepository<CDAccount, Long>{
+public interface CDAccountRepository extends JpaRepository<CDAccount, Integer>{
 
 }

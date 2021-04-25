@@ -7,11 +7,29 @@ import javax.persistence.*;
 public class CheckingAccount extends BankAccount {
 
     @ManyToOne
-    @JoinColumn(name="account_holders_id", nullable=false)
     private AccountHolder accountHolder;
     
 	public CheckingAccount() {
-		this.setInterestRate(0.0001);
+
+	}
+
+	CheckingAccount(double balance) {
+		super();
+		this.balance = balance;
+	}
+
+	CheckingAccount(double balance, double interestRate) {
+		super(balance);
+		this.balance = balance;
+		this.INTEREST_RATE = interestRate;
+	}
+
+	CheckingAccount(long accountNumber, double balance, double interestRate, java.util.Date accountOpenedOn) {
+		super(balance);
+		this.accountNumber = accountNumber;
+		this.balance = balance;
+		this.INTEREST_RATE = interestRate;
+		this.setOpenDate(accountOpenedOn);
 	}
 
 	public AccountHolder getAccountHolder() {
@@ -21,42 +39,16 @@ public class CheckingAccount extends BankAccount {
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
 	}
-	
-	
-	
-/*
-    CheckingAccount() {
-    	super(0, interestRate);
-    }
-   
-    CheckingAccount(double balance) {
-        super(MeritBank.getNextAccountNumber(), balance, interestRate, new Date());
-    }
-    
-    CheckingAccount(double balance, double interestRate) {
-    	super(balance, interestRate);
-    }
-    
-    CheckingAccount(long accountNumber, double balance, double interestRate, Date accountOpenedOn) {
-        super(accountNumber, balance, interestRate, accountOpenedOn);
-    }
-    
-    public double getInterestRate() {
-		return interestRate;
-	}
-	public void setInterestRate(double interestRate) {
-		this.interestRate = interestRate;
-	}
 
-    public static CheckingAccount readFromString(String accountData) throws ParseException, NumberFormatException {
-        String[] tempArr = accountData.split(",");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//    public static CheckingAccount readFromString(String accountData) throws ParseException, NumberFormatException {
+//        String[] tempArr = accountData.split(",");
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//
+//        long tempAcctNum = Long.parseLong(tempArr[0]);
+//        double tempBal = Double.parseDouble(tempArr[1]), tempIntRate = Double.parseDouble(tempArr[2]);
+//        Date tempOpenDate = dateFormat.parse((tempArr[3]));
+//
+//        return new CheckingAccount(tempAcctNum, tempBal, tempIntRate, tempOpenDate);
+//    }
 
-        long tempAcctNum = Long.parseLong(tempArr[0]);
-        double tempBal = Double.parseDouble(tempArr[1]), tempIntRate = Double.parseDouble(tempArr[2]);
-        Date tempOpenDate = dateFormat.parse((tempArr[3]));
-
-        return new CheckingAccount(tempAcctNum, tempBal, tempIntRate, tempOpenDate);
-    }
-*/
 }

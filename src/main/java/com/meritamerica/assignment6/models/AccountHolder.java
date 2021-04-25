@@ -1,39 +1,47 @@
 package com.meritamerica.assignment6.models;
 
+import com.meritamerica.assignment6.exceptions.ExceedsCombinedBalanceLimitException;
+
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "account_holders")
-public class AccountHolder {
-	
-	// ------ INSTANCE VARS
+public class AccountHolder implements Comparable<AccountHolder> {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_holder_id")
+    private int id;
+
+    @NotEmpty(message = "Please Enter First Name")
     private String firstName;
-    
     private String middleName;
-    
+    @NotEmpty(message = "Please Enter Last Name")
     private String lastName;
-    
+    @NotEmpty(message = "Please Enter SSN")
     @Size(min = 9, max = 11)
     private String ssn;
-    
-    @OneToMany(mappedBy = "accountHolder")
+
+    CheckingAccount[] checkingArray = new CheckingAccount[0];
+    SavingsAccount[] savingsAray = new SavingsAccount[0];
+    CDAccount[] cdAccountArray = new CDAccount[0];
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CheckingAccount> checkingAccounts;
-    
-    @OneToMany(mappedBy = "accountHolder")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<SavingsAccount> savingsAccounts;
-    
-    @OneToMany(mappedBy = "accountHolder")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CDAccount> cdAccounts;
     
     AccountHolder() {	
-		
+        this.checkingAccounts = new ArrayList<>();
+        this.savingsAccounts = new ArrayList<>();
+        this.cdAccounts = new ArrayList<>();
+
     }
 
     AccountHolder(String firstName, String middleName, String lastName, String ssn) {
@@ -47,7 +55,7 @@ public class AccountHolder {
     	return id;
     }
     
-    public void setId(long id) {
+    public void setId(int id) {
     	this.id = id;
     }
 
@@ -91,6 +99,29 @@ public class AccountHolder {
 		this.checkingAccounts = checkingAccounts;
 	}
 
+    public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException {
+        if (getCheckingBalance() + getSavingsBalance() + openingBalance >= 25000) {
+            throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
+        }
+
+        CheckingAccount newCheckingAccount = new CheckingAccount(openingBalance);
+        checkingArray = Arrays.copyOf(checkingArray, checkingArray.length + 1);
+        checkingArray[checkingArray.length - 1] = newCheckingAccount;
+        checkingAccounts = new ArrayList<CheckingAccount>(Arrays.asList(checkingArray));
+        return newCheckingAccount;
+    }
+
+    public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) throws ExceedsCombinedBalanceLimitException {
+        if (getCheckingBalance() + getSavingsBalance() + checkingAccount.getBalance() >= 25000) {
+            throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
+        }
+
+        checkingArray = Arrays.copyOf(checkingArray, checkingArray.length + 1);
+        checkingArray[checkingArray.length - 1] = checkingAccount;
+        this.checkingAccounts = new ArrayList<CheckingAccount>(Arrays.asList(checkingArray));
+        return checkingAccount;
+    }
+
 	public List<SavingsAccount> getSavingsAccounts() {
 		return savingsAccounts;
 	}
@@ -106,52 +137,100 @@ public class AccountHolder {
 	public void setCDAccounts(List<CDAccount> cdAccounts) {
 		this.cdAccounts = cdAccounts;
 	}
-      
- /*
-    // TODO modify methods to send to a service for handling
-    //---------- CHECKING ACCOUNT ----------//
-    public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
-        return this.addCheckingAccount(new CheckingAccount(openingBalance));
-    }
-
-    public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) throws ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
-        if ((this.getCheckingBalance() + (this.getCombinedBalance() - this.getCDBalance()) >= BALANCE_LIMIT)) {
-            throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
-        } else if(checkingAccount.getBalance() > FRAUD_THRESHOLD) {
-            throw new ExceedsFraudSuspicionLimitException("Possible fraud detected. Transaction is being sent to fraud detection services for review");
-        }
-
-        // checkingAccount.addTransaction(new DepositTransaction(checkingAccount, checkingAccount.getBalance()));
-
-        CheckingAccount[] tempArr = new CheckingAccount[this.checkingAccountList.length + 1];
-        System.arraycopy(this.checkingAccountList, 0, tempArr, 0, this.checkingAccountList.length);
-        tempArr[tempArr.length - 1] = checkingAccount;
-        this.checkingAccountList = tempArr;
-
-        return checkingAccount;
-    }
-
-    public CheckingAccount[] getCheckingAccounts() {
-        return checkingAccountList;
-    }
 
     public int getNumberOfCheckingAccounts() {
-        int numOfAccounts = 0;
-        for(CheckingAccount i: checkingAccountList) {
-            if(i != null) {
-                numOfAccounts++;
-            }
+        if(checkingAccounts != null) {
+            return checkingAccounts.size();
         }
-        return numOfAccounts;
+        return 0;
     }
 
     public double getCheckingBalance() {
         double sum = 0;
-        for(CheckingAccount chkAcct: this.checkingAccountList) {
-            sum += chkAcct.balance;
+        if(checkingAccounts != null) {
+            for (CheckingAccount chkAcct : checkingAccounts) {
+                sum = sum + chkAcct.getBalance();
+            }
+            return sum;
+        }
+            return 0;
+    }
+
+    public int getNumberOfSavingsAccounts() {
+        if(savingsAccounts != null) {
+            return savingsAccounts.size();
+        }
+        return 0;
+    }
+
+    public double getSavingsBalance() {
+        double sum = 0;
+        if(savingsAccounts != null) {
+            for (SavingsAccount savAcct : savingsAccounts) {
+                sum = sum + savAcct.getBalance();
+            }
+            return sum;
+        }
+        return 0;
+    }
+
+    public int getNumberOfCDAccounts() {
+        if(cdAccounts != null) {
+            return cdAccounts.size();
+        }
+        return 0;
+    }
+
+    public double getCDBalance() {
+        double sum = 0;
+        if(cdAccounts != null) {
+            for (CDAccount cdAcct : cdAccounts) {
+                sum = sum + cdAcct.getBalance();
+            }
+            return sum;
+        }
+        return 0;
+    }
+
+    public double getCombinedBalance() {
+        return getCheckingBalance() + getSavingsBalance() + getCDBalance();
+    }
+
+    @Override
+    public int compareTo(AccountHolder otherAccountHolder) {
+        return Double.compare(this.getCombinedBalance(), otherAccountHolder.getCombinedBalance());
+        /*
+         if(this.getCombinedBalance() == otherAccountHolder.getCombinedBalance()) return 0;
+        else if(this.getCombinedBalance() < otherAccountHolder.getCombinedBalance()) return -1;
+        else return 1;
+         */
+
+ /*
+
+     public AccountHolder() {
+         this.cdaccountList = new ArrayList<>();
+         this.checkingList = new ArrayList<>();
+         this.savingsList = new ArrayList<>();
+    }
+
+    //---------- CHECKING ACCOUNT ----------//
+
+
+    public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException {
+        if (getCheckingBalance() + getSavingsBalance() - openingBalance) >= 25000)) {
+            throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
         }
 
-        return sum;
+        CheckingAccount newCheckingAccount = new CheckingAccount(openingBalance);
+        CheckingAccount[] tempArr = Arrays.copyOf(checkingArray, checkingArray.length + 1);
+        checkingArray = tempArr;
+        checkingArray[checkingArray.length - 1] = newCheckingAccount;
+        this.checkingAccountList = new ArrayList<CheckingAccount>(Arrays.asList(checkingArray);
+        return newCheckingAccount;
+    }
+
+    public CheckingAccount[] getCheckingAccounts() {
+        return checkingAccountList;
     }
 
     //-------- SAVINGS ACCOUNT ------//
@@ -176,29 +255,6 @@ public class AccountHolder {
 
     }
 
-    public SavingsAccount[] getSavingsAccounts() {
-        return savingsAccountList;
-    }
-
-    public int getNumberOfSavingsAccounts() {
-        int numOfAccounts = 0;
-        for(SavingsAccount i: savingsAccountList)
-        {
-            if(i != null)
-            {
-                numOfAccounts++;
-            }
-        }
-        return numOfAccounts;
-    }
-
-    public double getSavingsBalance() {
-        double sum = 0;
-        for(SavingsAccount savAcct: savingsAccountList) {
-            sum += savAcct.balance;
-        }
-        return sum;
-    }
 
     //------ CD ACCOUNT ---------//
     public CDAccount addCDAccount(CDOffering offering, double openingBalance) throws ExceedsFraudSuspicionLimitException, NegativeAmountException {
@@ -251,30 +307,6 @@ public class AccountHolder {
         return cdAccount;
     }
 
-    public CDAccount[] getCDAccounts() {
-        return cdAccountList;
-    }
-
-    public int getNumberOfCDAccounts() {
-        int numOfAccounts = 0;
-        for(CDAccount i: cdAccountList)
-        {
-            if(i != null)
-            {
-                numOfAccounts++;
-            }
-        }
-        return numOfAccounts;
-    }
-
-    public double getCDBalance() {
-        double sum = 0;
-        for(CDAccount cdAcct: cdAccountList) {
-            sum += cdAcct.balance;
-        }
-        return sum;
-    }
-
     public static AccountHolder readFromString(String accountHolderData) {
         String[] tempArr = accountHolderData.split(",");
         String tempFirstName = "", tempMidName = "", TempLastName = "", tempSSN = "";
@@ -316,17 +348,7 @@ public class AccountHolder {
 //        return sb.toString();
 //    }
 
-    public double getCombinedBalance() {
-        return this.getCheckingBalance() + this.getSavingsBalance() + this.getCDBalance();
+*/
     }
-
-    @Override
-    public int compareTo(AccountHolder otherAccountHolder) {
-        return Double.compare(this.getCombinedBalance(), otherAccountHolder.getCombinedBalance());
-        /*
-         if(this.getCombinedBalance() == otherAccountHolder.getCombinedBalance()) return 0;
-        else if(this.getCombinedBalance() < otherAccountHolder.getCombinedBalance()) return -1;
-        else return 1;
-         */
 }
 
