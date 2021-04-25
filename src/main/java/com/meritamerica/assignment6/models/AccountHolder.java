@@ -88,7 +88,7 @@ public class AccountHolder {
 	}
 
 	public void setCheckingAccounts(List<CheckingAccount> checkingAccounts) {
-		this.checkingAccounts = checkingAccounts;
+		this.checkingAccounts = new ArrayList<CheckingAccount>(checkingAccounts);
 	}
 
 	public List<SavingsAccount> getSavingsAccounts() {
@@ -96,7 +96,7 @@ public class AccountHolder {
 	}
 
 	public void setSavingsAccounts(List<SavingsAccount> savingsAccounts) {
-		this.savingsAccounts = savingsAccounts;
+		this.savingsAccounts = new ArrayList<SavingsAccount>(savingsAccounts);
 	}
 	
 	public List<CDAccount> getCDAccounts() {
@@ -104,9 +104,67 @@ public class AccountHolder {
 	}
 
 	public void setCDAccounts(List<CDAccount> cdAccounts) {
-		this.cdAccounts = cdAccounts;
+		this.cdAccounts = new ArrayList<CDAccount>(cdAccounts);
 	}
-      
+
+    public int getNumberOfCheckingAccounts() {
+        if(checkingAccounts != null) {
+            return checkingAccounts.size();
+        }
+        return 0;
+    }
+
+    public double getCheckingBalance() {
+        double sum = 0;
+        if(checkingAccounts != null) {
+            for (CheckingAccount chkAcct : checkingAccounts) {
+                sum = sum + chkAcct.getBalance();
+            }
+            return sum;
+        }
+            return 0;
+    }
+
+    public int getNumberOfSavingsAccounts() {
+        if(savingsAccounts != null) {
+            return savingsAccounts.size();
+        }
+        return 0;
+    }
+
+    public double getSavingsBalance() {
+        double sum = 0;
+        if(savingsAccounts != null) {
+            for (SavingsAccount savAcct : savingsAccounts) {
+                sum = sum + savAcct.getBalance();
+            }
+            return sum;
+        }
+        return 0;
+    }
+
+    public int getNumberOfCDAccounts() {
+        if(cdAccounts != null) {
+            return cdAccounts.size();
+        }
+        return 0;
+    }
+
+    public double getCDBalance() {
+        double sum = 0;
+        if(cdAccounts != null) {
+            for (CDAccount cdAcct : cdAccounts) {
+                sum = sum + cdAcct.getBalance();
+            }
+            return sum;
+        }
+        return 0;
+    }
+
+    public double getCombinedBalance() {
+        return getCheckingBalance() + getSavingsBalance() + getCDBalance();
+    }
+
  /*
     // TODO modify methods to send to a service for handling
     //---------- CHECKING ACCOUNT ----------//
@@ -135,25 +193,6 @@ public class AccountHolder {
         return checkingAccountList;
     }
 
-    public int getNumberOfCheckingAccounts() {
-        int numOfAccounts = 0;
-        for(CheckingAccount i: checkingAccountList) {
-            if(i != null) {
-                numOfAccounts++;
-            }
-        }
-        return numOfAccounts;
-    }
-
-    public double getCheckingBalance() {
-        double sum = 0;
-        for(CheckingAccount chkAcct: this.checkingAccountList) {
-            sum += chkAcct.balance;
-        }
-
-        return sum;
-    }
-
     //-------- SAVINGS ACCOUNT ------//
     public SavingsAccount addSavingsAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
         return this.addSavingsAccount(new SavingsAccount(openingBalance));
@@ -176,29 +215,6 @@ public class AccountHolder {
 
     }
 
-    public SavingsAccount[] getSavingsAccounts() {
-        return savingsAccountList;
-    }
-
-    public int getNumberOfSavingsAccounts() {
-        int numOfAccounts = 0;
-        for(SavingsAccount i: savingsAccountList)
-        {
-            if(i != null)
-            {
-                numOfAccounts++;
-            }
-        }
-        return numOfAccounts;
-    }
-
-    public double getSavingsBalance() {
-        double sum = 0;
-        for(SavingsAccount savAcct: savingsAccountList) {
-            sum += savAcct.balance;
-        }
-        return sum;
-    }
 
     //------ CD ACCOUNT ---------//
     public CDAccount addCDAccount(CDOffering offering, double openingBalance) throws ExceedsFraudSuspicionLimitException, NegativeAmountException {
@@ -251,30 +267,6 @@ public class AccountHolder {
         return cdAccount;
     }
 
-    public CDAccount[] getCDAccounts() {
-        return cdAccountList;
-    }
-
-    public int getNumberOfCDAccounts() {
-        int numOfAccounts = 0;
-        for(CDAccount i: cdAccountList)
-        {
-            if(i != null)
-            {
-                numOfAccounts++;
-            }
-        }
-        return numOfAccounts;
-    }
-
-    public double getCDBalance() {
-        double sum = 0;
-        for(CDAccount cdAcct: cdAccountList) {
-            sum += cdAcct.balance;
-        }
-        return sum;
-    }
-
     public static AccountHolder readFromString(String accountHolderData) {
         String[] tempArr = accountHolderData.split(",");
         String tempFirstName = "", tempMidName = "", TempLastName = "", tempSSN = "";
@@ -315,10 +307,6 @@ public class AccountHolder {
 //
 //        return sb.toString();
 //    }
-
-    public double getCombinedBalance() {
-        return this.getCheckingBalance() + this.getSavingsBalance() + this.getCDBalance();
-    }
 
     @Override
     public int compareTo(AccountHolder otherAccountHolder) {

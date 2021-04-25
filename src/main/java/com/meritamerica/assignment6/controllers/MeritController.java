@@ -50,7 +50,7 @@ public class MeritController {
 	}
 		
 	@GetMapping(value = "/AccountHolders/{id}")
-	public AccountHolder getAccountHolderById(@PathVariable("id") long id) throws NotFoundException {
+	public AccountHolder getAccountHolderById(@PathVariable long id) throws NotFoundException {
 		return bankService.getAccountById(id);
 	}
 	
@@ -68,7 +68,7 @@ public class MeritController {
 	}
 	
 	@GetMapping(value = "/CDOfferings/{id}")
-	public CDOffering getCDOfferingById(@PathVariable("id") long id) throws NotFoundException {
+	public CDOffering getCDOfferingById(@PathVariable long id) throws NotFoundException {
 		return bankService.getCDOfferingById(id);
 	}
 	
@@ -76,7 +76,7 @@ public class MeritController {
 	// -------------------
 	@PostMapping(value = "/AccountHolder/{id}/CheckingAccounts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount addCheckingToAccountHolder(@PathVariable("id") long id, @RequestBody CheckingAccount checkingAccount) {
+	public CheckingAccount addCheckingToAccountHolder(@PathVariable long id, @RequestBody CheckingAccount checkingAccount) {
 		// TODO add way to allow bank service to add CheckingAccount
 		return bankService.addCheckingAccount(checkingAccount);
 	}
@@ -91,12 +91,12 @@ public class MeritController {
 	// --------------------
 	@PostMapping(value = "/AccountHolder/{id}/SavingsAccounts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public SavingsAccount addSavingsToAccountHolder(@PathVariable("id") long id, @RequestBody SavingsAccount savingsAccount) {
+	public SavingsAccount addSavingsToAccountHolder(@PathVariable long id, @RequestBody SavingsAccount savingsAccount) {
 		return bankService.addSavingsAccount(savingsAccount);
 	}
 	
 	@GetMapping(value = "/AccountHolder/{id}/SavingsAccounts")
-	public List<SavingsAccount> getAccountHolderSavingsAccounts(@PathVariable("id") long id) throws NotFoundException {
+	public List<SavingsAccount> getAccountHolderSavingsAccounts(@PathVariable long id) throws NotFoundException {
 		return bankService.getSavingsAccounts();
 	}
 	
@@ -104,12 +104,12 @@ public class MeritController {
 	// -------------------------
 	@PostMapping(value = "/AccountHolder/{id}/CDAccounts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CDAccount addCDToAccountHolder(@PathVariable("id") long id, @RequestBody CDAccount cdAccount) {
+	public CDAccount addCDToAccountHolder(@PathVariable long id, @RequestBody CDAccount cdAccount) {
 		return bankService.addCDAccount(cdAccount);
 	}
 	
 	@GetMapping(value = "/AccountHolder/{id}/CDAccounts")
-	public List<CDAccount> getAccountHolderCDAccounts(@PathVariable("id") long id) throws NotFoundException {
+	public List<CDAccount> getAccountHolderCDAccounts(@PathVariable long id) throws NotFoundException {
 		return bankService.getCDAccounts();
 	}
 	
