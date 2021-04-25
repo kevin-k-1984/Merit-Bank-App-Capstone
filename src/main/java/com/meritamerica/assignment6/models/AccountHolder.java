@@ -1,5 +1,7 @@
 package com.meritamerica.assignment6.models;
 
+import com.meritamerica.assignment6.exceptions.ExceedsCombinedBalanceLimitException;
+
 import java.util.*;
 
 import javax.persistence.*;
@@ -13,7 +15,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_holder_id")
-    private long id;
+    private int id;
 
     @NotEmpty(message = "Please Enter First Name")
     private String firstName;
@@ -23,7 +25,11 @@ public class AccountHolder implements Comparable<AccountHolder> {
     @NotEmpty(message = "Please Enter SSN")
     @Size(min = 9, max = 11)
     private String ssn;
-    
+
+    CheckingAccount[] checkingArray = new CheckingAccount[0];
+    SavingsAccount[] savingsAray = new SavingsAccount[0];
+    CDAccount[] cdAccountArray = new CDAccount[0];
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<CheckingAccount> checkingAccounts;
     @OneToMany(cascade = CascadeType.ALL)
@@ -49,7 +55,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
     	return id;
     }
     
-    public void setId(long id) {
+    public void setId(int id) {
     	this.id = id;
     }
 
@@ -92,6 +98,29 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	public void setCheckingAccounts(List<CheckingAccount> checkingAccounts) {
 		this.checkingAccounts = checkingAccounts;
 	}
+
+    public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException {
+        if (getCheckingBalance() + getSavingsBalance() + openingBalance >= 25000) {
+            throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
+        }
+
+        CheckingAccount newCheckingAccount = new CheckingAccount(openingBalance);
+        checkingArray = Arrays.copyOf(checkingArray, checkingArray.length + 1);
+        checkingArray[checkingArray.length - 1] = newCheckingAccount;
+        checkingAccounts = new ArrayList<CheckingAccount>(Arrays.asList(checkingArray));
+        return newCheckingAccount;
+    }
+
+    public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) throws ExceedsCombinedBalanceLimitException {
+        if (getCheckingBalance() + getSavingsBalance() + checkingAccount.getBalance() >= 25000) {
+            throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
+        }
+
+        checkingArray = Arrays.copyOf(checkingArray, checkingArray.length + 1);
+        checkingArray[checkingArray.length - 1] = checkingAccount;
+        this.checkingAccounts = new ArrayList<CheckingAccount>(Arrays.asList(checkingArray));
+        return checkingAccount;
+    }
 
 	public List<SavingsAccount> getSavingsAccounts() {
 		return savingsAccounts;
@@ -184,27 +213,20 @@ public class AccountHolder implements Comparable<AccountHolder> {
          this.savingsList = new ArrayList<>();
     }
 
-    // TODO modify methods to send to a service for handling
     //---------- CHECKING ACCOUNT ----------//
-    public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
-        return this.addCheckingAccount(new CheckingAccount(openingBalance));
-    }
 
-    public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) throws ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
-        if ((this.getCheckingBalance() + (this.getCombinedBalance() - this.getCDBalance()) >= BALANCE_LIMIT)) {
+
+    public CheckingAccount addCheckingAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException {
+        if (getCheckingBalance() + getSavingsBalance() - openingBalance) >= 25000)) {
             throw new ExceedsCombinedBalanceLimitException("Balance exceeds limit. Unable to open new account at this time");
-        } else if(checkingAccount.getBalance() > FRAUD_THRESHOLD) {
-            throw new ExceedsFraudSuspicionLimitException("Possible fraud detected. Transaction is being sent to fraud detection services for review");
         }
 
-        // checkingAccount.addTransaction(new DepositTransaction(checkingAccount, checkingAccount.getBalance()));
-
-        CheckingAccount[] tempArr = new CheckingAccount[this.checkingAccountList.length + 1];
-        System.arraycopy(this.checkingAccountList, 0, tempArr, 0, this.checkingAccountList.length);
-        tempArr[tempArr.length - 1] = checkingAccount;
-        this.checkingAccountList = tempArr;
-
-        return checkingAccount;
+        CheckingAccount newCheckingAccount = new CheckingAccount(openingBalance);
+        CheckingAccount[] tempArr = Arrays.copyOf(checkingArray, checkingArray.length + 1);
+        checkingArray = tempArr;
+        checkingArray[checkingArray.length - 1] = newCheckingAccount;
+        this.checkingAccountList = new ArrayList<CheckingAccount>(Arrays.asList(checkingArray);
+        return newCheckingAccount;
     }
 
     public CheckingAccount[] getCheckingAccounts() {

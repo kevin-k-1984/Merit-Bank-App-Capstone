@@ -8,6 +8,6 @@ import com.meritamerica.assignment6.models.AccountHolder;
 import java.util.Optional;
 
 @Repository
-public interface AccountHolderRepository extends JpaRepository<AccountHolder, Long>{
+public interface AccountHolderRepository extends JpaRepository<AccountHolder, Integer>{
     //Optional<AccountHolder> findById(Long id);
 }

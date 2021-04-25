@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.meritamerica.assignment6.exceptions.ExceedsCombinedBalanceLimitException;
 import com.meritamerica.assignment6.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,8 +73,8 @@ public class MeritController {
 	}
 		
 	@GetMapping(value = "/AccountHolders/{id}")
-	public Optional<AccountHolder> getAccountHolderById(@PathVariable long id) throws NotFoundException {
-		return accountHolderRepository.findById(id);
+	public AccountHolder getAccountHolderById(@PathVariable int id) throws NotFoundException {
+		return accountHolderList.get(id);
 	}
 
 	// ---- CD Offers -----
@@ -81,35 +82,42 @@ public class MeritController {
 	@PostMapping(value = "/CDOfferings")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CDOffering addCDOffering(@RequestBody CDOffering offering) {
-		return cdOfferRepository.save(offering);
+		cdOfferList.add(offering);
+		return offering;
 	}
 	
 	@GetMapping(value = "/CDOfferings")
 	public List<CDOffering> getCDOfferings() {
-		return cdOfferRepository.findAll();
+		return cdOfferList;
 	}
 	
 	@GetMapping(value = "/CDOfferings/{id}")
-	public Optional<CDOffering> getCDOfferingById(@PathVariable long id) throws NotFoundException {
-		return cdOfferRepository.findById(id);
+	public CDOffering getCDOfferingById(@PathVariable int id) throws NotFoundException {
+		return cdOfferList.get(id);
 	}
 	
 	// ---- Checking -----
 	// -------------------
 	@PostMapping(value = "/AccountHolder/{id}/CheckingAccounts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount addCheckingToAccountHolder(@PathVariable long id, @RequestBody CheckingAccount checkingAccount) {
+	public CheckingAccount addCheckingToAccountHolder(@PathVariable int id, @RequestBody CheckingAccount checkingAccount) throws ExceedsCombinedBalanceLimitException {
+		if(accountHolderList.get(id - 1) == null) {
+			return null;
+		} else if(checkingAccount.getBalance() > 25000) {
+			throw new ExceedsCombinedBalanceLimitException("Balance exceeds max threshold for new account");
+		}
+		accountHolderList.get(id - 1).addCheckingAccount(checkingAccount);
 		return checkingAccountRepository.save(checkingAccount);
 	}
 
-	@GetMapping(value = "/CheckingAccounts")
-	public List<CheckingAccount> getCheckingAccounts() {
-		return checkingAccountRepository.findAll();
-	}
+//	@GetMapping(value = "/CheckingAccounts")
+//	public List<CheckingAccount> getCheckingAccounts() {
+//		return checkingAccountRepository.findAll();
+//	}
 	
 	// TODO need way to grab accounts from account holder by ID
 	@GetMapping(value = "/AccountHolder/{id}/CheckingAccounts")
-	public Optional<CheckingAccount> getAccountHolderCheckingAccounts(@PathVariable long id) throws NotFoundException {
+	public Optional<CheckingAccount> getAccountHolderCheckingAccounts(@PathVariable int id) throws NotFoundException {
 		return checkingAccountRepository.findById(id);
 	}
 	
@@ -117,17 +125,17 @@ public class MeritController {
 	// --------------------
 	@PostMapping(value = "/AccountHolder/{id}/SavingsAccounts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public SavingsAccount addSavingsToAccountHolder(@PathVariable long id, @RequestBody SavingsAccount savingsAccount) {
+	public SavingsAccount addSavingsToAccountHolder(@PathVariable int id, @RequestBody SavingsAccount savingsAccount) {
 		return savingsAccountRepository.save(savingsAccount);
 	}
 
-	@GetMapping(value = "/SavingsAccounts")
-	public List<SavingsAccount> getSavingsAccounts() {
-		return savingsAccountRepository.findAll();
-	}
+//	@GetMapping(value = "/SavingsAccounts")
+//	public List<SavingsAccount> getSavingsAccounts() {
+//		return savingsAccountRepository.findAll();
+//	}
 	
 	@GetMapping(value = "/AccountHolder/{id}/SavingsAccounts")
-	public Optional<SavingsAccount> getAccountHolderSavingsAccounts(@PathVariable long id) throws NotFoundException {
+	public Optional<SavingsAccount> getAccountHolderSavingsAccounts(@PathVariable int id) throws NotFoundException {
 		return savingsAccountRepository.findById(id);
 	}
 	
@@ -135,17 +143,17 @@ public class MeritController {
 	// -------------------------
 	@PostMapping(value = "/AccountHolder/{id}/CDAccounts")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CDAccount addCDToAccountHolder(@PathVariable long id, @RequestBody CDAccount cdAccount) {
+	public CDAccount addCDToAccountHolder(@PathVariable int id, @RequestBody CDAccount cdAccount) {
 		return cdAccountRepository.save(cdAccount);
 	}
 
-	@GetMapping(value = "/CDAccounts")
-	public List<CDAccount> getCDAccounts() {
-		return cdAccountRepository.findAll();
-	}
+//	@GetMapping(value = "/CDAccounts")
+//	public List<CDAccount> getCDAccounts() {
+//		return cdAccountRepository.findAll();
+//	}
 
 	@GetMapping(value = "/AccountHolder/{id}/CDAccounts")
-	public Optional<CDAccount> getAccountHolderCDAccounts(@PathVariable long id) throws NotFoundException {
+	public Optional<CDAccount> getAccountHolderCDAccounts(@PathVariable int id) throws NotFoundException {
 		return cdAccountRepository.findById(id);
 	}
 	

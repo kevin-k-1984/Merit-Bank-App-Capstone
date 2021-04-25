@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.meritamerica.assignment6.models.CDOffering;
 
 @Repository
-public interface CDOfferRepository extends JpaRepository<CDOffering, Long>{
+public interface CDOfferRepository extends JpaRepository<CDOffering, Integer>{
 
 }

@@ -11,8 +11,27 @@ public class SavingsAccount extends BankAccount {
     private AccountHolder accountHolder;
     
     public SavingsAccount() {
-    	this.setInterestRate(0.01);
+
     }
+
+	SavingsAccount(double balance) {
+		super();
+		this.balance = balance;
+	}
+
+	SavingsAccount(double balance, double interestRate) {
+		super(balance);
+		this.balance = balance;
+		this.INTEREST_RATE = interestRate;
+	}
+
+	SavingsAccount(long accountNumber, double balance, double interestRate, java.util.Date accountOpenedOn) {
+		super(balance);
+		this.accountNumber = accountNumber;
+		this.balance = balance;
+		this.INTEREST_RATE = interestRate;
+		this.setOpenDate(accountOpenedOn);
+	}
 	
 	public AccountHolder getAccountHolder() {
 		return accountHolder;

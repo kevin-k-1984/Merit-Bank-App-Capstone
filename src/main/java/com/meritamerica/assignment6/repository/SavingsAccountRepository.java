@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.meritamerica.assignment6.models.SavingsAccount;
 
 @Repository
-public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, Long>{
+public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, Integer>{
 
 }
