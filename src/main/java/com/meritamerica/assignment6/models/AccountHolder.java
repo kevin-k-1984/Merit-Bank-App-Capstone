@@ -11,34 +11,19 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
 	
 	// ------ INSTANCE VARS
     @Id
-    @GeneratedValue
-    @Column(name = "account_holder_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "first_name",
-    		nullable = false,
-    		columnDefinition = "TEXT"
-    		)
+    
     private String firstName;
-    @Column(name = "middle_name",
-    		columnDefinition = "TEXT"
-    		)
+    
     private String middleName;
-    @Column(name = "last_name",
-    		nullable = false,
-    		columnDefinition = "TEXT"
-    		)
+    
     private String lastName;
+    
     @Size(min = 9, max = 11)
-    @Column(name = "ssn",
-    		nullable = false,
-    		updatable = false,
-    		unique = true,
-    		columnDefinition = "TEXT"
-    		)
     private String ssn;
     
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_holder_id", referencedColumnName = "account_number")
     private List<CheckingAccount> checkingAccounts;
     
     @OneToMany(cascade = CascadeType.ALL)
@@ -48,7 +33,6 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
     private List<CDAccount> cdAccounts;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_holder_id", referencedColumnName = "contact_id")
     private AccountHolderContactDetails accountHolderContactDetails;
     
     // TODO add relationship types here
@@ -59,10 +43,11 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
     private CDAccount[] cdAccountList = new CDAccount[0];
 */
     AccountHolder() {	
-        this.checkingAccounts = new ArrayList<>();
-        this.savingsAccounts = new ArrayList<>();
-        this.cdAccounts = new ArrayList<>();
-        this.accountHolderContactDetails = new AccountHolderContactDetails();
+		/*
+		 * this.checkingAccounts = new ArrayList<>(); this.savingsAccounts = new
+		 * ArrayList<>(); this.cdAccounts = new ArrayList<>();
+		 * this.accountHolderContactDetails = new AccountHolderContactDetails();
+		 */
     }
 
     AccountHolder(String firstName, String middleName, String lastName, String ssn) {
@@ -73,6 +58,14 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
         this.checkingAccounts = new ArrayList<>();
         this.savingsAccounts = new ArrayList<>();
         this.cdAccounts = new ArrayList<>();
+    }
+    
+    public long getId() {
+    	return id;
+    }
+    
+    public void setId(long id) {
+    	this.id = id;
     }
 
     public String getFirstName() {
@@ -105,14 +98,6 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
 
     public void setSSN(String ssn) {
         this.ssn = ssn;
-    }
-
-    public long getId() {
-    	return id;
-    }
-    
-    public void setId(long id) {
-    	this.id = id;
     }
 
 	public List<CheckingAccount> getCheckingAccounts() {

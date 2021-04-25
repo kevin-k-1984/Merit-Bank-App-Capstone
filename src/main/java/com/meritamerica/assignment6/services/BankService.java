@@ -31,7 +31,6 @@ public class BankService {
 	private CheckingAccountRepository checkingAccountRepository;
 	@Autowired
 	private SavingsAccountRepository savingsAccountRepository;
-	@Autowired
 
 	// ---- Account Holder
 	public AccountHolder addAccountHolder(AccountHolder accountHolder) {

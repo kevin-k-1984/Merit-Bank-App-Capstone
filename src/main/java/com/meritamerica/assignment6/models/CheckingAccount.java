@@ -3,7 +3,6 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "checking_accounts")
 public class CheckingAccount extends BankAccount {
 
     static final double INTEREST_RATE = 0.0001;	
@@ -12,6 +11,7 @@ public class CheckingAccount extends BankAccount {
 		super();
 		super.setInterestRate(INTEREST_RATE);
 	}
+	
 /*
     CheckingAccount() {
     	super(0, interestRate);

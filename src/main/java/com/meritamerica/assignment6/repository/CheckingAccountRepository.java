@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.meritamerica.assignment6.models.CheckingAccount;
 
-@Repository
 public interface CheckingAccountRepository extends JpaRepository<CheckingAccount, Long>{
 
 }

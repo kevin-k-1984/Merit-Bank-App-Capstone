@@ -36,7 +36,7 @@ public class MeritController {
 	@Autowired
 	private BankService bankService;
 	
-	Logger logs = LoggerFactory.getLogger(MeritController.class);
+	private Logger log = LoggerFactory.getLogger(MeritController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String test() {

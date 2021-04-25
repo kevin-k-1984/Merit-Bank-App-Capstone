@@ -5,22 +5,14 @@ import java.util.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cd_accounts")
 public class CDAccount extends BankAccount {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	@Column(name = "open_date",
-			nullable = false,
-			columnDefinition = "DATE"
-			)
     protected Date openDate;
-	@Column(name = "term",
-			nullable = false,
-			columnDefinition = "INT"
-			)
     protected int term;
+    
+    public CDAccount() {
+    	
+    }
 
 	public int getTerm() {
 		return term;

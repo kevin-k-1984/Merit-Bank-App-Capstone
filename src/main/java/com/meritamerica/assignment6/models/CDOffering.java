@@ -3,25 +3,15 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cd_offerings")
 public class CDOffering {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name = "term",
-			nullable = false,
-			columnDefinition = "INT"
-			)
     protected int term;
-	@Column(name = "interest_rate",
-			nullable = false,
-			columnDefinition = "DOUBLE"
-			)
     protected double interestRate;
     
     public CDOffering(int term, double interestRate) {
-    	// this.offerId = nextOfferId++;
         this.term = term;
         this.interestRate = interestRate;
     }

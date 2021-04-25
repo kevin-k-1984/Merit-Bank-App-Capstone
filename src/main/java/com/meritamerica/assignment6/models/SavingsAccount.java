@@ -3,23 +3,18 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "savings_accounts")
 public class SavingsAccount extends BankAccount {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long accountNumber;
-	@Column(name = "interest_rate",
-			columnDefinition = "DOUBLE"
-			)
     double interestRate = 0.01;
 	
 	public double getInterestRate() {
 		return interestRate;
 	}
+	
 	public void setInterestRate(double interestRate) {
 		this.interestRate = interestRate;
 	}
+	
 
 /*	
     SavingsAccount() {

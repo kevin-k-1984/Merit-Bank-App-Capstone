@@ -3,35 +3,20 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "contact_info")
 public class AccountHolderContactDetails {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "contact_id")
 	private Long contactId;
 	
-	@Column(name = "contact_email",
-			unique = true,
-			nullable = false,
-			columnDefinition = "TEXT"
-			)
 	private String email;
 	
-	@Column(name = "contact_phone_num",
-			unique = true,
-			nullable = false,
-			columnDefinition = "TEXT"
-			)
 	private String phoneNumber;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "contact_id", referencedColumnName = "account_holder_id")
 	private AccountHolder accountHolder;
 	
-	public AccountHolderContactDetails() {
-		
-	}
+	public AccountHolderContactDetails() {}
 
 	public Long getContactId() {
 		return contactId;

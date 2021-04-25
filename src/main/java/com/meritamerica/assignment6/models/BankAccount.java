@@ -7,27 +7,21 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Min;
 
 @MappedSuperclass
-@Table(name = "bank_accounts")
 public abstract class BankAccount {
 
 	@Id
 	@GeneratedValue
 	private Long accountNumber;
 	
-	@Column(name = "account_open_date")
     private Date openDate;
 	
 	@Min(0)
-	@Column(name = "interest_rate")
 	private double interestRate;
 	
 	@Min(0)
-    @Column(name = "account_balance",
-    		updatable = false,
-    		nullable = false)
     private double balance;
 	
-	private Long accountHolder;
+	//private Long accountHolder;
     // Date accountOpenedOn;
     // protected long accountNumber;
     // protected double interestRate;
@@ -69,13 +63,13 @@ public abstract class BankAccount {
 		this.balance = balance;
 	}
 
-	public Long getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(Long accountHolder) {
-		this.accountHolder = accountHolder;
-	}
+//	public Long getAccountHolder() {
+//		return accountHolder;
+//	}
+//
+//	public void setAccountHolder(Long accountHolder) {
+//		this.accountHolder = accountHolder;
+//	}
     
     
     
