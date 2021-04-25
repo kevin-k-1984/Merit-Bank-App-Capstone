@@ -3,19 +3,25 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "savings_accounts")
 public class SavingsAccount extends BankAccount {
-
-    double interestRate = 0.01;
+    
+    @ManyToOne
+    @JoinColumn(name="account_holders_id", nullable=false)
+    private AccountHolder accountHolder;
+    
+    public SavingsAccount() {
+    	this.setInterestRate(0.01);
+    }
 	
-	public double getInterestRate() {
-		return interestRate;
+	public AccountHolder getAccountHolder() {
+		return accountHolder;
+	}
+
+	public void setAccountHolder(AccountHolder accountHolder) {
+		this.accountHolder = accountHolder;
 	}
 	
-	public void setInterestRate(double interestRate) {
-		this.interestRate = interestRate;
-	}
-	
-
 /*	
     SavingsAccount() {
         super(0, INTEREST_RATE);

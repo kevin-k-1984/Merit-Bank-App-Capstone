@@ -3,18 +3,18 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "account_holder_contact_details")
 public class AccountHolderContactDetails {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long contactId;
 	
 	private String email;
 	
 	private String phoneNumber;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private AccountHolder accountHolder;
+//	private AccountHolder accountHolder;
 	
 	public AccountHolderContactDetails() {}
 
@@ -42,12 +42,12 @@ public class AccountHolderContactDetails {
 		this.phoneNumber = phoneNumber;
 	}
 	
-	public AccountHolder getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
-	}
+//	public AccountHolder getAccountHolder() {
+//		return accountHolder;
+//	}
+//
+//	public void setAccountHolder(AccountHolder accountHolder) {
+//		this.accountHolder = accountHolder;
+//	}
 	
 }

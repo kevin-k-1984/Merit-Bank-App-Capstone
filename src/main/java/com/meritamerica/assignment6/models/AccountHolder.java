@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "account_holders")
-public class AccountHolder /*implements Comparable<AccountHolder>*/ {
+public class AccountHolder {
 	
 	// ------ INSTANCE VARS
     @Id
@@ -23,17 +23,16 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
     @Size(min = 9, max = 11)
     private String ssn;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accountHolder")
     private List<CheckingAccount> checkingAccounts;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accountHolder")
     private List<SavingsAccount> savingsAccounts;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accountHolder")
     private List<CDAccount> cdAccounts;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private AccountHolderContactDetails accountHolderContactDetails;
+//    private AccountHolderContactDetails accountHolderContactDetails;
     
     // TODO add relationship types here
     // for DB
@@ -55,9 +54,9 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
         this.middleName = middleName;
         this.lastName = lastName;
         this.ssn = ssn; 
-        this.checkingAccounts = new ArrayList<>();
-        this.savingsAccounts = new ArrayList<>();
-        this.cdAccounts = new ArrayList<>();
+//        this.checkingAccounts = new ArrayList<>();
+//        this.savingsAccounts = new ArrayList<>();
+//        this.cdAccounts = new ArrayList<>();
     }
     
     public long getId() {
@@ -115,22 +114,22 @@ public class AccountHolder /*implements Comparable<AccountHolder>*/ {
 	public void setSavingsAccounts(List<SavingsAccount> savingsAccounts) {
 		this.savingsAccounts = savingsAccounts;
 	}
+//
+//	public List<CDAccount> getCdAccounts() {
+//		return cdAccounts;
+//	}
+//
+//	public void setCdAccounts(List<CDAccount> cdAccounts) {
+//		this.cdAccounts = cdAccounts;
+//	}
 
-	public List<CDAccount> getCdAccounts() {
-		return cdAccounts;
-	}
-
-	public void setCdAccounts(List<CDAccount> cdAccounts) {
-		this.cdAccounts = cdAccounts;
-	}
-
-	public AccountHolderContactDetails getAccountHolderContactDetails() {
-		return accountHolderContactDetails;
-	}
-
-	public void setAccountHolderContactDetails(AccountHolderContactDetails accountHolderContactDetails) {
-		this.accountHolderContactDetails = accountHolderContactDetails;
-	}
+//	public AccountHolderContactDetails getAccountHolderContactDetails() {
+//		return accountHolderContactDetails;
+//	}
+//
+//	public void setAccountHolderContactDetails(AccountHolderContactDetails accountHolderContactDetails) {
+//		this.accountHolderContactDetails = accountHolderContactDetails;
+//	}
     
     
     

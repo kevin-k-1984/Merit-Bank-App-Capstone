@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.meritamerica.assignment6.exceptions.NotFoundException;
 import com.meritamerica.assignment6.models.AccountHolder;
 import com.meritamerica.assignment6.models.CDAccount;
@@ -90,10 +88,10 @@ public class BankService {
 		return checkingAccountRepository.save(checkingAccount);
 	}
 	
-	public List<CheckingAccount> getCheckingAccounts(@PathVariable Long id) {
-		System.out.println("Retrieve list of check accnts");
-		return getById(id).getCheckingAccounts();
-	}
+//	public List<CheckingAccount> getCheckingAccounts(@PathVariable Long id) {
+//		System.out.println("Retrieve list of check accnts");
+//		return getById(id).getCheckingAccounts();
+//	}
 	
 	public CheckingAccount getCheckingAccountById(Long id) {
 		System.out.println("Get cd acct by ID");

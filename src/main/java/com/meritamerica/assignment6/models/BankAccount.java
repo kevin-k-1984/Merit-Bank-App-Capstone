@@ -3,14 +3,13 @@ package com.meritamerica.assignment6.models;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Min;
 
 @MappedSuperclass
 public abstract class BankAccount {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long accountNumber;
 	
     private Date openDate;
@@ -20,12 +19,6 @@ public abstract class BankAccount {
 	
 	@Min(0)
     private double balance;
-	
-	//private Long accountHolder;
-    // Date accountOpenedOn;
-    // protected long accountNumber;
-    // protected double interestRate;
-    // private List<Transaction> listOfTransactions = new ArrayList<Transaction>();	
     
     BankAccount() {
     	this.openDate = new Date();
@@ -62,15 +55,6 @@ public abstract class BankAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-
-//	public Long getAccountHolder() {
-//		return accountHolder;
-//	}
-//
-//	public void setAccountHolder(Long accountHolder) {
-//		this.accountHolder = accountHolder;
-//	}
-    
     
     
 /*

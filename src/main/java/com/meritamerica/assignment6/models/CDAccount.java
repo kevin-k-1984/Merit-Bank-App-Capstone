@@ -1,29 +1,44 @@
 package com.meritamerica.assignment6.models;
 
-import java.util.*;
-
 import javax.persistence.*;
 
 @Entity
+@Table(name = "CDAccounts")
 public class CDAccount extends BankAccount {
 
-    protected Date openDate;
-    protected int term;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cdOffering_id", referencedColumnName = "id")
+    private CDOffering cdOffering;
+    
+    @ManyToOne
+    @JoinColumn(name="account_holders_id", nullable=false)
+    private AccountHolder accountHolder;
     
     public CDAccount() {
-    	
     }
+    
+    public CDOffering getCdOffering() {
+		return cdOffering;
+	}
 
+	public void setCdOffering(CDOffering cdOffering) {
+		this.cdOffering = cdOffering;
+	}
+
+	public AccountHolder getAccountHolder() {
+		return accountHolder;
+	}
+
+	public void setAccountHolder(AccountHolder accountHolder) {
+		this.accountHolder = accountHolder;
+	}
+	
 	public int getTerm() {
-		return term;
+		return this.cdOffering.getTerm();
 	}
 
 	public void setTerm(int term) {
-		this.term = term;
-	}
-
-	public Date getAccountOpenedOn() {
-		return openDate;
+		this.cdOffering.setTerm(term);
 	}
 
 /*	
