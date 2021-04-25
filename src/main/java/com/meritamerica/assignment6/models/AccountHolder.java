@@ -32,21 +32,8 @@ public class AccountHolder {
     @OneToMany(mappedBy = "accountHolder")
     private List<CDAccount> cdAccounts;
     
-//    private AccountHolderContactDetails accountHolderContactDetails;
-    
-    // TODO add relationship types here
-    // for DB
-/*
-    private CheckingAccount[] checkingAccountList = new CheckingAccount[0];
-    private SavingsAccount[] savingsAccountList = new SavingsAccount[0];
-    private CDAccount[] cdAccountList = new CDAccount[0];
-*/
     AccountHolder() {	
-		/*
-		 * this.checkingAccounts = new ArrayList<>(); this.savingsAccounts = new
-		 * ArrayList<>(); this.cdAccounts = new ArrayList<>();
-		 * this.accountHolderContactDetails = new AccountHolderContactDetails();
-		 */
+		
     }
 
     AccountHolder(String firstName, String middleName, String lastName, String ssn) {
@@ -54,9 +41,6 @@ public class AccountHolder {
         this.middleName = middleName;
         this.lastName = lastName;
         this.ssn = ssn; 
-//        this.checkingAccounts = new ArrayList<>();
-//        this.savingsAccounts = new ArrayList<>();
-//        this.cdAccounts = new ArrayList<>();
     }
     
     public long getId() {
@@ -114,25 +98,15 @@ public class AccountHolder {
 	public void setSavingsAccounts(List<SavingsAccount> savingsAccounts) {
 		this.savingsAccounts = savingsAccounts;
 	}
-//
-//	public List<CDAccount> getCdAccounts() {
-//		return cdAccounts;
-//	}
-//
-//	public void setCdAccounts(List<CDAccount> cdAccounts) {
-//		this.cdAccounts = cdAccounts;
-//	}
+	
+	public List<CDAccount> getCDAccounts() {
+		return cdAccounts;
+	}
 
-//	public AccountHolderContactDetails getAccountHolderContactDetails() {
-//		return accountHolderContactDetails;
-//	}
-//
-//	public void setAccountHolderContactDetails(AccountHolderContactDetails accountHolderContactDetails) {
-//		this.accountHolderContactDetails = accountHolderContactDetails;
-//	}
-    
-    
-    
+	public void setCDAccounts(List<CDAccount> cdAccounts) {
+		this.cdAccounts = cdAccounts;
+	}
+      
  /*
     // TODO modify methods to send to a service for handling
     //---------- CHECKING ACCOUNT ----------//
