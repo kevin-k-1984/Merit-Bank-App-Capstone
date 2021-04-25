@@ -1,5 +1,6 @@
 package com.meritamerica.assignment6.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,9 @@ public class MeritController {
 //	@Autowired
 //	private BankService bankService;
 
+	List<CDOffering> cdOfferList = new ArrayList<CDOffering>();
+	List<AccountHolder> accountHolderList = new ArrayList<AccountHolder>();
+
 	private Logger log = LoggerFactory.getLogger(MeritController.class);
 	@Autowired
 	private AccountHolderRepository accountHolderRepository;
@@ -51,13 +55,20 @@ public class MeritController {
 	// -------------------
 	@PostMapping(value = "/AccountHolders")
 	@ResponseStatus(HttpStatus.CREATED)
-	public AccountHolder addAccountHolder(@RequestBody AccountHolder accountHolder) {		
-		return accountHolderRepository.save(accountHolder);
+	public AccountHolder addAccountHolder(@RequestBody AccountHolder accountHolder) {
+		if(accountHolder.getFirstName() == null ||
+		accountHolder.getMiddleName() == null ||
+		accountHolder.getLastName() == null ||
+		accountHolder.getSSN() == null) {
+			return null;
+		}
+		accountHolderList.add(accountHolder);
+		return accountHolder;
 	}
 	
 	@GetMapping(value = "/AccountHolders")
 	public List<AccountHolder> getListOfAccountHolders() {
-		return accountHolderRepository.findAll();
+		return accountHolderList;
 	}
 		
 	@GetMapping(value = "/AccountHolders/{id}")
