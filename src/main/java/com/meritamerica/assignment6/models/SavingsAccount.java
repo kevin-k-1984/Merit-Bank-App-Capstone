@@ -2,32 +2,21 @@ package com.meritamerica.assignment6.models;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "SavingsAccounts")
+@Table(name = "savingsAccounts")
 public class SavingsAccount extends BankAccount {
-    
-    @ManyToOne
-    @JoinColumn(name = "accountHolder_id", nullable = false)
-    private AccountHolder accountHolder;
     
     public SavingsAccount() {}
 
-	SavingsAccount(double balance) {
+	public SavingsAccount(double balance) {
 		super(balance);
 	}
 
-	SavingsAccount(double balance, double interestRate) {
+	public SavingsAccount(double balance, double interestRate) {
 		super(balance, interestRate);
 	}
 
-	SavingsAccount(double balance, double interestRate, java.util.Date openedDate) {
+	public SavingsAccount(double balance, double interestRate, java.util.Date openedDate) {
 		super(balance, interestRate, openedDate);
-	}
-	
-	public AccountHolder getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
 	}
 }

@@ -6,30 +6,18 @@ import javax.persistence.*;
 @Table(name = "checkingAccounts")
 public class CheckingAccount extends BankAccount {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "accountHolders_id")
-    private AccountHolder accountHolder;
-    
 	public CheckingAccount() {}
 
-	CheckingAccount(double balance) {
+	public CheckingAccount(double balance) {
 		super(balance);
 	}
 
-	CheckingAccount(double balance, double interestRate) {
+	public CheckingAccount(double balance, double interestRate) {
 		super(balance, interestRate);
 	}
 
-	CheckingAccount(double balance, double interestRate, java.util.Date openedDate) {
+	public CheckingAccount(double balance, double interestRate, java.util.Date openedDate) {
 		super(balance, interestRate, openedDate);
-	}
-
-	public AccountHolder getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
 	}
 	
 	@Override

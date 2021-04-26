@@ -12,6 +12,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_holders_id")
     private long id;
 
     @NotEmpty(message = "Please Enter First Name")
@@ -27,15 +28,15 @@ public class AccountHolder implements Comparable<AccountHolder> {
     private String ssn;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
-    private Set<CheckingAccount> checkingAccounts;
+    private List<CheckingAccount> checkingAccounts;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
-    private Set<SavingsAccount> savingsAccounts;
+    private List<SavingsAccount> savingsAccounts;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
-    private Set<CDAccount> cdAccounts;
+    private List<CDAccount> cdAccounts;
     
-    AccountHolder() {}
+    public AccountHolder() {}
 
-    AccountHolder(String firstName, String middleName, String lastName, String ssn) {
+    public AccountHolder(String firstName, String middleName, String lastName, String ssn) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -82,27 +83,27 @@ public class AccountHolder implements Comparable<AccountHolder> {
         this.ssn = ssn;
     }
 
-	public Set<CheckingAccount> getCheckingAccounts() {
+	public List<CheckingAccount> getCheckingAccounts() {
 		return checkingAccounts;
 	}
 
-	public void setCheckingAccounts(Set<CheckingAccount> checkingAccounts) {
+	public void setCheckingAccounts(List<CheckingAccount> checkingAccounts) {
 		this.checkingAccounts = checkingAccounts;
 	}
 
-	public Set<SavingsAccount> getSavingsAccounts() {
+	public List<SavingsAccount> getSavingsAccounts() {
 		return savingsAccounts;
 	}
 
-	public void setSavingsAccounts(Set<SavingsAccount> savingsAccounts) {
+	public void setSavingsAccounts(List<SavingsAccount> savingsAccounts) {
 		this.savingsAccounts = savingsAccounts;
 	}
 	
-	public Set<CDAccount> getCDAccounts() {
+	public List<CDAccount> getCDAccounts() {
 		return cdAccounts;
 	}
 
-	public void setCDAccounts(Set<CDAccount> cdAccounts) {
+	public void setCDAccounts(List<CDAccount> cdAccounts) {
 		this.cdAccounts = cdAccounts;
 	}
 	

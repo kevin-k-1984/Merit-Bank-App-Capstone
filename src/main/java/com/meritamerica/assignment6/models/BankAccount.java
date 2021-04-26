@@ -8,16 +8,20 @@ import javax.validation.constraints.Min;
 @MappedSuperclass
 public abstract class BankAccount {
 
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
-
-    protected Date openedDate;
-	protected double interestRate;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "account_holders_id")
+    protected AccountHolder accountHolder;
 	
 	@Min(value = 0)
     protected double balance;
 
+    protected Date openedDate;
+	protected double interestRate;
+	
 	public BankAccount() {
 		this(0);
 	}
@@ -42,6 +46,14 @@ public abstract class BankAccount {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public AccountHolder getAccountHolder() {
+		return accountHolder;
+	}
+
+	public void setAccountHolder(AccountHolder accountHolder) {
+		this.accountHolder = accountHolder;
 	}
 
 	public double getInterestRate() {

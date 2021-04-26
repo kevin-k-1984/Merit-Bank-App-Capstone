@@ -4,14 +4,10 @@ import javax.persistence.*;
 
 @Entity
 public class CDAccount extends BankAccount {
-
+	
     @ManyToOne
     @JoinColumn(name = "cdOffering_id", nullable = false)
     private CDOffering cdOffering;
-    
-    @ManyToOne
-    @JoinColumn(name = "accountHolder_id", nullable = false)
-    private AccountHolder accountHolder;
     
     public CDAccount() {
     }
@@ -22,14 +18,6 @@ public class CDAccount extends BankAccount {
 
 	public void setCdOffering(CDOffering cdOffering) {
 		this.cdOffering = cdOffering;
-	}
-
-	public AccountHolder getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
 	}
 	
 	public int getTerm() {
