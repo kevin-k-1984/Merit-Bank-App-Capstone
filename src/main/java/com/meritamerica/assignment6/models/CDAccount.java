@@ -3,15 +3,14 @@ package com.meritamerica.assignment6.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CDAccounts")
 public class CDAccount extends BankAccount {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cdOffering_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "cdOffering_id", nullable = false)
     private CDOffering cdOffering;
     
     @ManyToOne
-    @JoinColumn(name="account_holders_id", nullable=false)
+    @JoinColumn(name = "accountHolder_id", nullable = false)
     private AccountHolder accountHolder;
     
     public CDAccount() {

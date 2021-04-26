@@ -2,34 +2,26 @@ package com.meritamerica.assignment6.models;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "checking_accounts")
+@Entity(name = "CheckingAccounts")
+@Table(name = "checkingAccounts")
 public class CheckingAccount extends BankAccount {
 
-    @ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "accountHolders_id")
     private AccountHolder accountHolder;
     
-	public CheckingAccount() {
-
-	}
+	public CheckingAccount() {}
 
 	CheckingAccount(double balance) {
-		super();
-		this.balance = balance;
+		super(balance);
 	}
 
 	CheckingAccount(double balance, double interestRate) {
-		super(balance);
-		this.balance = balance;
-		this.INTEREST_RATE = interestRate;
+		super(balance, interestRate);
 	}
 
-	CheckingAccount(long accountNumber, double balance, double interestRate, java.util.Date accountOpenedOn) {
-		super(balance);
-		this.accountNumber = accountNumber;
-		this.balance = balance;
-		this.INTEREST_RATE = interestRate;
-		this.setOpenDate(accountOpenedOn);
+	CheckingAccount(double balance, double interestRate, java.util.Date openedDate) {
+		super(balance, interestRate, openedDate);
 	}
 
 	public AccountHolder getAccountHolder() {
@@ -39,16 +31,16 @@ public class CheckingAccount extends BankAccount {
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
 	}
-
-//    public static CheckingAccount readFromString(String accountData) throws ParseException, NumberFormatException {
-//        String[] tempArr = accountData.split(",");
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//
-//        long tempAcctNum = Long.parseLong(tempArr[0]);
-//        double tempBal = Double.parseDouble(tempArr[1]), tempIntRate = Double.parseDouble(tempArr[2]);
-//        Date tempOpenDate = dateFormat.parse((tempArr[3]));
-//
-//        return new CheckingAccount(tempAcctNum, tempBal, tempIntRate, tempOpenDate);
-//    }
-
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CheckingAccount )) return false;
+        return (Long)id != null && (Long)id == ((CheckingAccount)o).getId();
+    }
+ 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

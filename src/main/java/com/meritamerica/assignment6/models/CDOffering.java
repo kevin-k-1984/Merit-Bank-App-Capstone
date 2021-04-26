@@ -1,17 +1,18 @@
 package com.meritamerica.assignment6.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CDOfferings")
 public class CDOffering {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@OneToOne(mappedBy = "cdOffering")
-	private CDAccount cdAccount;
+	@OneToMany(mappedBy = "cdOffering")
+	private List<CDAccount> cdAccounts;
 	
     protected int term;
     protected double interestRate;
@@ -31,12 +32,12 @@ public class CDOffering {
     	this.id = id;
     }
     
-    public CDAccount getCdAccount() {
-    	return this.cdAccount;
+    public List<CDAccount> getCDAccounts() {
+    	return this.cdAccounts;
     }
     
-    public void setCdAccount(CDAccount cdAccount) {
-    	this.cdAccount = cdAccount;
+    public void setCDAccount(List<CDAccount> cdAccounts) {
+    	this.cdAccounts = cdAccounts;
     }
 
     public int getTerm() {
@@ -54,33 +55,4 @@ public class CDOffering {
     public void setInterestRate(double interestRate) {
     	this.interestRate = interestRate;
     }
-    
-//  public void setOfferId(int offerId) {
-//    this.offerId = offerId;
-//  }
-    
-//  public int getOfferId() {
-//	return offerId;
-//	}
-
-/*
-    public static CDOffering readFromString(String cdOfferingDataString) {
-
-        int tempTerm;
-        double tempIntRate;
-        int comma = cdOfferingDataString.indexOf(",");
-        if(comma >= 0) {
-            tempTerm = Integer.parseInt(cdOfferingDataString.substring(0, comma));
-            tempIntRate = Double.parseDouble(cdOfferingDataString.substring(comma + 1));
-        } else {
-            System.out.println("CD Offering data format incorrect");
-            throw new NumberFormatException();
-        }
-        return new CDOffering(tempTerm, tempIntRate);
-    }
-
-    public String writeToString() {
-        return this.term + "," + this.interestRate + "\n";
-    }
-*/
 }
