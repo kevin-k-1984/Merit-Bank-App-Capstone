@@ -3,20 +3,20 @@ package com.meritamerica.assignment6.models;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 public abstract class BankAccount {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_holders_id")
-    protected AccountHolder accountHolder;
+	private long id;
 	
 	@Min(value = 0)
+	@Max(value = 25000)
     protected double balance;
 
     protected Date openedDate;
@@ -27,7 +27,7 @@ public abstract class BankAccount {
 	}
 
     BankAccount(double balance) {
-    	this(balance, 0.01, new Date());
+    	this(balance, 0.025, new Date());
     }
 
 	BankAccount(double balance, double interestRate) {
@@ -48,13 +48,13 @@ public abstract class BankAccount {
 		this.id = id;
 	}
 
-	public AccountHolder getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
-	}
+//	public AccountHolder getAccountHolder() {
+//		return accountHolder;
+//	}
+//
+//	public void setAccountHolder(AccountHolder accountHolder) {
+//		this.accountHolder = accountHolder;
+//	}
 
 	public double getInterestRate() {
 		return this.interestRate;

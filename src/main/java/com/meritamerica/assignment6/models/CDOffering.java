@@ -1,5 +1,6 @@
 package com.meritamerica.assignment6.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -8,11 +9,11 @@ import javax.persistence.*;
 public class CDOffering {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@OneToMany(mappedBy = "cdOffering")
-	private List<CDAccount> cdAccounts;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cdOffering", orphanRemoval = true)
+	private List<CDAccount> cdAccounts = new ArrayList<>();
 	
     protected int term;
     protected double interestRate;

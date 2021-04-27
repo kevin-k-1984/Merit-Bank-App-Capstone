@@ -1,10 +1,12 @@
 package com.meritamerica.assignment6.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import com.meritamerica.assignment6.models.CDAccount;
+import java.util.*;
 
-@RepositoryRestResource(path = "CDAccounts")
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.meritamerica.assignment6.models.CDAccount;
+import com.meritamerica.assignment6.models.AccountHolder;
+
 public interface CDAccountRepository extends JpaRepository<CDAccount, Long>{
 
+	public List<CDAccount> findByAccountHolder(AccountHolder accountHolder);
 }

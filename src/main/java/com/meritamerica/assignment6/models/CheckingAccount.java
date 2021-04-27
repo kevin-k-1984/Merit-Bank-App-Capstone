@@ -2,10 +2,17 @@ package com.meritamerica.assignment6.models;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "CheckingAccounts")
 @Table(name = "checkingAccounts")
 public class CheckingAccount extends BankAccount {
 
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "account_holders_id")
+    private AccountHolder accountHolder;
+	
 	public CheckingAccount() {}
 
 	public CheckingAccount(double balance) {
@@ -19,16 +26,12 @@ public class CheckingAccount extends BankAccount {
 	public CheckingAccount(double balance, double interestRate, java.util.Date openedDate) {
 		super(balance, interestRate, openedDate);
 	}
-	
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CheckingAccount )) return false;
-        return (Long)id != null && (Long)id == ((CheckingAccount)o).getId();
-    }
- 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+
+	public AccountHolder getAccountHolder() {
+		return accountHolder;
+	}
+
+	public void setAccountHolder(AccountHolder accountHolder) {
+		this.accountHolder = accountHolder;
+	}
 }

@@ -6,6 +6,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "AccountHolders")
 @Table(name = "accountHolders")
 public class AccountHolder implements Comparable<AccountHolder> {
@@ -27,12 +32,17 @@ public class AccountHolder implements Comparable<AccountHolder> {
     @Size(min = 9, max = 11)
     private String ssn;
 
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
-    private List<CheckingAccount> checkingAccounts;
+    private List<CheckingAccount> checkingAccounts = new ArrayList<>();
+    
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
-    private List<SavingsAccount> savingsAccounts;
+    private List<SavingsAccount> savingsAccounts = new ArrayList<>();
+    
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
-    private List<CDAccount> cdAccounts;
+    private List<CDAccount> cdAccounts = new ArrayList<>();
     
     public AccountHolder() {}
 
@@ -99,18 +109,13 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		this.savingsAccounts = savingsAccounts;
 	}
 	
-	public List<CDAccount> getCDAccounts() {
+	public List<CDAccount> getCdAccounts() {
 		return cdAccounts;
 	}
 
-	public void setCDAccounts(List<CDAccount> cdAccounts) {
+	public void setCdAccounts(List<CDAccount> cdAccounts) {
 		this.cdAccounts = cdAccounts;
 	}
-	
-//	public void addCheckingAccount(CheckingAccount checkingAccount) {
-//		this.checkingAccounts.add(checkingAccount);
-//		checkingAccount.setAccountHolder(this);
-//	}
 
 	@Override
 	public int compareTo(AccountHolder o) {
