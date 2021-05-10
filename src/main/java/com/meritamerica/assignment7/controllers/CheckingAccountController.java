@@ -1,4 +1,4 @@
-package com.meritamerica.assignment6.controllers;
+package com.meritamerica.assignment7.controllers;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.meritamerica.assignment6.models.AccountHolder;
-import com.meritamerica.assignment6.models.CheckingAccount;
-import com.meritamerica.assignment6.services.CheckingAccountService;
+import com.meritamerica.assignment7.models.AccountHolder;
+import com.meritamerica.assignment7.models.CheckingAccount;
+import com.meritamerica.assignment7.services.CheckingAccountService;
 
 @RestController
 @RequestMapping("/CheckingAccounts")

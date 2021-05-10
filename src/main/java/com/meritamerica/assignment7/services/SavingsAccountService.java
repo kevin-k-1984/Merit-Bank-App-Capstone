@@ -1,15 +1,15 @@
-package com.meritamerica.assignment6.services;
+package com.meritamerica.assignment7.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.meritamerica.assignment6.models.AccountHolder;
-import com.meritamerica.assignment6.models.CheckingAccount;
-import com.meritamerica.assignment6.models.SavingsAccount;
-import com.meritamerica.assignment6.repository.CheckingAccountRepository;
-import com.meritamerica.assignment6.repository.SavingsAccountRepository;
+import com.meritamerica.assignment7.models.AccountHolder;
+import com.meritamerica.assignment7.models.CheckingAccount;
+import com.meritamerica.assignment7.models.SavingsAccount;
+import com.meritamerica.assignment7.repository.CheckingAccountRepository;
+import com.meritamerica.assignment7.repository.SavingsAccountRepository;
 
 @Service
 public class SavingsAccountService {

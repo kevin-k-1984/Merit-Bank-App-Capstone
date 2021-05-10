@@ -1,12 +1,12 @@
-package com.meritamerica.assignment6.services;
+package com.meritamerica.assignment7.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.meritamerica.assignment6.models.CDOffering;
-import com.meritamerica.assignment6.repository.CDOfferRepository;
+import com.meritamerica.assignment7.models.CDOffering;
+import com.meritamerica.assignment7.repository.CDOfferRepository;
 
 @Service
 public class CDOfferingsService {

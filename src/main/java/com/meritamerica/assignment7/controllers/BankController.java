@@ -1,31 +1,20 @@
-package com.meritamerica.assignment6.controllers;
+package com.meritamerica.assignment7.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.meritamerica.assignment6.repository.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.meritamerica.assignment6.exceptions.NotFoundException;
-import com.meritamerica.assignment6.models.AccountHolder;
-import com.meritamerica.assignment6.models.CDAccount;
-import com.meritamerica.assignment6.models.CheckingAccount;
-import com.meritamerica.assignment6.models.SavingsAccount;
-import com.meritamerica.assignment6.services.BankService;
+import com.meritamerica.assignment7.models.AccountHolder;
+import com.meritamerica.assignment7.services.BankService;
 
 @RestController
 @RequestMapping("/AccountHolders")
@@ -33,7 +22,12 @@ public class BankController {
 	
 	@Autowired
 	private BankService bankService;
-	
+
+	@GetMapping("/")
+	public String home(){
+		return ("<h1>Welcome</h2>");
+	}
+
 	// ------ POSTs -------
 	 @PostMapping
 	 @ResponseStatus(HttpStatus.CREATED)
