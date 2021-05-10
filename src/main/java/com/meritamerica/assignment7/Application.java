@@ -16,12 +16,19 @@ public class Application {
 		UserRepository repo = context.getBean(UserRepository.class);
 
 		User user_admin = new User();
-		user_admin.setUserName("kevin");
-		user_admin.setPassword("pass");
+		user_admin.setUserName("admin");
+		user_admin.setPassword("admin");
 		user_admin.setActive(true);
 		user_admin.setRoles("ROLE_ADMIN");
+
+//		User user_user = new User();
+//		user_user.setUserName("kevin");
+//		user_user.setPassword("user");
+//		user_user.setActive(true);
+//		user_user.setRoles("ROLE_USER");
 		
 		repo.save(user_admin);
+//		repo.save(user_user);
 		
 	}
 }

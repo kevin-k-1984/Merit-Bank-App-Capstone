@@ -1,4 +1,4 @@
-package com.meritamerica.assignment7.Security;
+package com.meritamerica.assignment7.services;
 
 import com.meritamerica.assignment7.models.MyUserDetails;
 import com.meritamerica.assignment7.models.User;
