@@ -16,28 +16,21 @@ import com.meritamerica.assignment7.models.CDOffering;
 import com.meritamerica.assignment7.services.CDOfferingsService;
 
 @RestController
-@RequestMapping("/CDOfferings")
 public class CDOfferingsController {
 
 	@Autowired
 	private CDOfferingsService cdOfferingsService;
-	
-	@PostMapping
+
+	// ----- Posts -----
+	@PostMapping("/CDOfferings")
 	@ResponseStatus(HttpStatus.CREATED)
-	public List<CDOffering> addCDOffering(@RequestBody List<CDOffering> cdOffering) {
-		for (CDOffering offer : cdOffering) {
-			this.cdOfferingsService.addCDOffering(offer);
-		}
-		return this.cdOfferingsService.getCDOfferings();
+	public CDOffering addCDOffering(@RequestBody CDOffering cdOffering) {
+		return this.cdOfferingsService.addCDOffering(cdOffering);
 	}
-	
-	@GetMapping
+
+	// ----- Gets -----
+	@GetMapping("/CDOfferings")
 	public List<CDOffering> getCDOfferings(){
 		return cdOfferingsService.getCDOfferings();
-	}
-	
-	@GetMapping("/{id}")
-	public CDOffering getCDOfferingById(@PathVariable long id) {
-		return this.cdOfferingsService.getCDOfferingById(id);
 	}
 }

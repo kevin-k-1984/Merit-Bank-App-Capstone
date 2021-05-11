@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meritamerica.assignment7.models.AccountHolder;
-import com.meritamerica.assignment7.models.CheckingAccount;
 import com.meritamerica.assignment7.models.SavingsAccount;
-import com.meritamerica.assignment7.repository.CheckingAccountRepository;
 import com.meritamerica.assignment7.repository.SavingsAccountRepository;
 
 @Service

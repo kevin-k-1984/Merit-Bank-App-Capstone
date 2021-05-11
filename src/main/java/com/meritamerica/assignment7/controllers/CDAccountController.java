@@ -24,19 +24,19 @@ public class CDAccountController {
 	private CDAccountService cdAccountService;
 	
 	// ----- POSTs -----
-	@PostMapping(value = "/{account_id}/CDOffer/{offer_id}")
+	@PostMapping(value = "/AccountHolders/{account_id}/CDOffer/{offer_id}/CDAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CDAccount addCDAccount(@PathVariable long account_id, @PathVariable long offer_id, @RequestBody CDAccount cdAccount) {
 		return this.cdAccountService.addCDAccount(account_id, offer_id, cdAccount);
 	}
 	
 	// ----- GETs -----
-	@GetMapping
+	@GetMapping("/AccountHolders/CDAccounts")
 	public List<CDAccount> getCDAccounts(){
 		return this.cdAccountService.getCDAccounts();
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/AccountHolders/{id}/CDAccounts")
 	public List<CDAccount> getCDAccountsForId(@PathVariable long id){
 		return this.cdAccountService.getCDAccountsForId(id);
 	}

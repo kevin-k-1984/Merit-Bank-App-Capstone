@@ -1,15 +1,12 @@
 package com.meritamerica.assignment7.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "AccountHolders")
 @Table(name = "accountHolders")
@@ -32,15 +29,20 @@ public class AccountHolder implements Comparable<AccountHolder> {
     @Size(min = 9, max = 11)
     private String ssn;
 
-    //@JsonIgnore
+//    @JsonIgnore
+    @OneToOne(mappedBy = "accountHolder")
+    private ContactDetails contact;
+
+//    @JsonIgnore
+    @OneToOne(mappedBy = "accountHolder")
+    private User user;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
     private List<CheckingAccount> checkingAccounts = new ArrayList<>();
-    
-    //@JsonIgnore
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
     private List<SavingsAccount> savingsAccounts = new ArrayList<>();
-    
-    //@JsonIgnore
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
     private List<CDAccount> cdAccounts = new ArrayList<>();
     
@@ -117,7 +119,23 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		this.cdAccounts = cdAccounts;
 	}
 
-	@Override
+    public ContactDetails getContact() {
+        return contact;
+    }
+
+    public void setContact(ContactDetails contact) {
+        this.contact = contact;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
 	public int compareTo(AccountHolder o) {
 		// TODO Auto-generated method stub
 		return 0;

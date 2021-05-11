@@ -19,26 +19,25 @@ import com.meritamerica.assignment7.services.CheckingAccountService;
 import com.meritamerica.assignment7.services.SavingsAccountService;
 
 @RestController
-@RequestMapping("/SavingsAccounts")
 public class SavingsAccountController {
 
 	@Autowired
 	private SavingsAccountService savingsAccountService;
 	
 	// ----- POSTs -----
-	@PostMapping(value = "/{id}")
+	@PostMapping(value = "/AccountHolders/{id}/SavingsAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addSavingsAccount(@PathVariable long id, @RequestBody SavingsAccount savingsAccount) {
 		return this.savingsAccountService.addSavingsAccount(id, savingsAccount);
 	}
 	
 	// ----- GETs ------
-	@GetMapping
+	@GetMapping("/AccountHolders/SavingsAccounts")
 	public List<SavingsAccount> getSavingsAccounts(){
 		return savingsAccountService.getSavingsAccounts();
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/AccountHolders/{id}/SavingsAccounts")
 	public List<SavingsAccount> getSavingsAccountsForId(@PathVariable long id){
 		return savingsAccountService.getSavingsAccountsForId(id);
 	}

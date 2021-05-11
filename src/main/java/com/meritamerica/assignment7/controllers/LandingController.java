@@ -3,8 +3,10 @@ package com.meritamerica.assignment7.controllers;
 import com.meritamerica.assignment7.Security.JwtUtil;
 import com.meritamerica.assignment7.models.AuthenticationRequest;
 import com.meritamerica.assignment7.models.AuthenticationResponse;
+import com.meritamerica.assignment7.models.User;
 import com.meritamerica.assignment7.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,9 +25,9 @@ public class LandingController {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-    @GetMapping("/")
+    @GetMapping("/admin")
     public String home() {
-        return ("<h1>Welcome</h1>");
+        return ("<h1>Welcome admin</h1>");
     }
 
     @GetMapping("/user")
@@ -33,10 +35,7 @@ public class LandingController {
         return ("<h1>Welcome User</h1>");
     }
 
-    @GetMapping("/admin")
-    public String admin() {
-        return ("<h1>Welcome Admin</h1>");
-    }
+
 
     //---------- authentication -------------
 
@@ -55,6 +54,12 @@ public class LandingController {
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+
+    @PostMapping("/authenticate/CreateUser")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User CreateUser(@RequestBody User user) {
+        return userDetailsService.StoreUser(user);
     }
 
 }

@@ -17,26 +17,25 @@ import com.meritamerica.assignment7.models.CheckingAccount;
 import com.meritamerica.assignment7.services.CheckingAccountService;
 
 @RestController
-@RequestMapping("/CheckingAccounts")
 public class CheckingAccountController {
 
 	@Autowired
 	private CheckingAccountService checkingAccountService;
 	
 	// ----- POSTs -----
-	@PostMapping(value = "/{id}")
+	@PostMapping(value = "/AccountHolders/{id}/CheckingAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addCheckingAccount(@PathVariable long id, @RequestBody CheckingAccount checkingAccount) {
 		return this.checkingAccountService.addCheckingAccount(id, checkingAccount);
 	}
 	
 	// ----- GETs ------
-	@GetMapping
+	@GetMapping("/AccountHolders/CheckingAccounts")
 	public List<CheckingAccount> getCheckingAccounts(){
 		return checkingAccountService.getCheckingAccounts();
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/AccountHolders/{id}/CheckingAccounts")
 	public List<CheckingAccount> getCheckingAccountsForId(@PathVariable long id){
 		return checkingAccountService.getCheckingAccountsForId(id);
 	}
