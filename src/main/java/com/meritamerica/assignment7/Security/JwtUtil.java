@@ -1,8 +1,12 @@
 package com.meritamerica.assignment7.Security;
 
+import com.meritamerica.assignment7.models.User;
+import com.meritamerica.assignment7.repository.UserRepository;
+import com.meritamerica.assignment7.services.MyUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,11 @@ import java.util.function.Function;
 public class JwtUtil {
 
     private final String SECRET_KEY = "secret";
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MyUserDetailsService userDetailsService;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -49,7 +58,14 @@ public class JwtUtil {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username= extractUsername(token);
+        final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public User GetUserFromToken(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        return this.userDetailsService.getUserByUsername(extractUsername(token));
     }
 }

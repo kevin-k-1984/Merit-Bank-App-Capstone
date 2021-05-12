@@ -21,7 +21,7 @@ public class CDAccountService {
 	@Autowired
 	private CDOfferRepository cdOfferRepository;
 	
-	public CDAccount addCDAccount(long account_id, long offer_id, CDAccount cdAccount) {
+	public AccountHolder addCDAccount(long account_id, long offer_id, CDAccount cdAccount) {
 		CDOffering actual_offer = this.cdOfferRepository.findById(offer_id).orElse(null);
 		actual_offer.getCDAccounts().add(cdAccount);
 		
@@ -32,7 +32,14 @@ public class CDAccountService {
 		ah.getCdAccounts().add(cdAccount);
 		cdAccount.setAccountHolder(ah);
 		
-		return this.cdAccountRepository.save(cdAccount);
+		return this.cdAccountRepository.save(cdAccount).getAccountHolder();
+	}
+
+	public AccountHolder addCDAccount(long account_id, CDAccount cdAccount) {
+		AccountHolder ah = this.bankService.getAccountHolderById(account_id);
+		cdAccount.setAccountHolder(ah);
+		ah.getCdAccounts().add(cdAccount);
+		return this.cdAccountRepository.save(cdAccount).getAccountHolder();
 	}
 	
 	public List<CDAccount> getCDAccounts() {

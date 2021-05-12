@@ -2,32 +2,41 @@ package com.meritamerica.assignment7.controllers;
 
 import java.util.List;
 
+import com.meritamerica.assignment7.Security.JwtUtil;
+import com.meritamerica.assignment7.models.AccountHolder;
+import com.meritamerica.assignment7.models.SavingsAccount;
+import com.meritamerica.assignment7.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.meritamerica.assignment7.models.AccountHolder;
 import com.meritamerica.assignment7.models.CDAccount;
 import com.meritamerica.assignment7.services.CDAccountService;
 
 @RestController
-@RequestMapping("/CDAccounts")
 public class CDAccountController {
 
 	@Autowired
 	private CDAccountService cdAccountService;
+	@Autowired
+	private MyUserDetailsService userDetailsService;
+	@Autowired
+	private JwtUtil jwtUtil;
 	
 	// ----- POSTs -----
 	@PostMapping(value = "/AccountHolders/{account_id}/CDOffer/{offer_id}/CDAccount")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CDAccount addCDAccount(@PathVariable long account_id, @PathVariable long offer_id, @RequestBody CDAccount cdAccount) {
+	public AccountHolder addCDAccount(@PathVariable long account_id, @PathVariable long offer_id, @RequestBody CDAccount cdAccount) {
 		return this.cdAccountService.addCDAccount(account_id, offer_id, cdAccount);
+	}
+
+	@PostMapping(value = "/Me/CDAccount")
+	@ResponseStatus(HttpStatus.CREATED)
+	public AccountHolder addCDAccount(@RequestHeader("authorization") String auth) {
+		return this.cdAccountService.addCDAccount(
+				this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getId(),
+				new CDAccount()
+		);
 	}
 	
 	// ----- GETs -----
@@ -39,5 +48,10 @@ public class CDAccountController {
 	@GetMapping(value = "/AccountHolders/{id}/CDAccounts")
 	public List<CDAccount> getCDAccountsForId(@PathVariable long id){
 		return this.cdAccountService.getCDAccountsForId(id);
+	}
+
+	@GetMapping("/Me/CDAccounts")
+	public List<CDAccount> getCDAccountsForUser(@RequestHeader("authorization") String auth) {
+		return this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getCdAccounts();
 	}
 }

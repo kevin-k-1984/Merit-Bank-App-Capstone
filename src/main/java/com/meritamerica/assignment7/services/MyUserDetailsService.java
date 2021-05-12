@@ -31,4 +31,13 @@ public class MyUserDetailsService implements UserDetailsService {
         if (!user.getRole().equals("ADMIN")) user.setRole("ROLE_ACCOUNTHOLDER");
         return userRepository.save(user);
     }
+
+    public User getUserByUsername(String username) throws UsernameNotFoundException {
+        String temp = username;
+        Optional<User> user = userRepository.findByUsername(username);
+
+        user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+
+        return user.get();
+    }
 }
