@@ -3,7 +3,6 @@ package com.meritamerica.assignment7.controllers;
 import java.util.List;
 
 import com.meritamerica.assignment7.Security.JwtUtil;
-import com.meritamerica.assignment7.models.User;
 import com.meritamerica.assignment7.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

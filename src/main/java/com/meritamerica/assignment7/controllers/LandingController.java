@@ -25,15 +25,15 @@ public class LandingController {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-    @GetMapping("/admin")
-    public String home() {
-        return ("<h1>Welcome admin</h1>");
-    }
-
-    @GetMapping("/user")
-    public String user() {
-        return ("<h1>Welcome User</h1>");
-    }
+//    @GetMapping("/admin")
+//    public String home() {
+//        return ("<h1>Welcome admin</h1>");
+//    }
+//
+//    @GetMapping("/user")
+//    public String user() {
+//        return ("<h1>Welcome User</h1>");
+//    }
 
 
 
