@@ -5,6 +5,7 @@ import com.meritamerica.MeritBankAppCapstone.models.AuthenticationRequest;
 import com.meritamerica.MeritBankAppCapstone.models.AuthenticationResponse;
 import com.meritamerica.MeritBankAppCapstone.models.User;
 import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.service.Contact;
 
 @RestController
-public class LandingController {
+public class AuthenticationController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -40,6 +42,9 @@ public class LandingController {
     //---------- authentication -------------
 
     @PostMapping("/authenticate")
+    @ApiOperation(value = "Attempts to authenticate user",
+            notes = "returns a JWT token that will be required in the header of all other API calls",
+            response = Contact.class)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(

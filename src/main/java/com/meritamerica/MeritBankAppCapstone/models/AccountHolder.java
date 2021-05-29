@@ -1,6 +1,7 @@
 package com.meritamerica.MeritBankAppCapstone.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.*;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity(name = "AccountHolders")
 @Table(name = "accountHolders")
+@ApiIgnore
 public class AccountHolder implements Comparable<AccountHolder> {
 
     @Id

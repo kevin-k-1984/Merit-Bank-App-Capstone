@@ -13,7 +13,7 @@ import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.services.BankService;
 
 @RestController
-public class BankController {
+public class AccountHolderController {
 	
 	@Autowired
 	private BankService bankService;
@@ -35,7 +35,7 @@ public class BankController {
 		return this.bankService.getAccountHolders();
 	}
 		
-	@GetMapping(value = "/AccountHolders/{id}")
+	@GetMapping("/AccountHolders/{id}")
 	public AccountHolder getAccountHolderById(@PathVariable long id) {
 		return this.bankService.getAccountHolderById(id);
 	}

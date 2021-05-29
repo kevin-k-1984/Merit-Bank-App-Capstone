@@ -10,6 +10,7 @@ import com.meritamerica.MeritBankAppCapstone.models.CDAccount;
 import com.meritamerica.MeritBankAppCapstone.models.CDOffering;
 import com.meritamerica.MeritBankAppCapstone.repository.CDAccountRepository;
 import com.meritamerica.MeritBankAppCapstone.repository.CDOfferRepository;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Service
 public class CDAccountService {
@@ -20,7 +21,7 @@ public class CDAccountService {
 	private CDAccountRepository cdAccountRepository;
 	@Autowired
 	private CDOfferRepository cdOfferRepository;
-	
+
 	public AccountHolder addCDAccount(long account_id, long offer_id, CDAccount cdAccount) {
 		CDOffering actual_offer = this.cdOfferRepository.findById(offer_id).orElse(null);
 		actual_offer.getCDAccounts().add(cdAccount);
