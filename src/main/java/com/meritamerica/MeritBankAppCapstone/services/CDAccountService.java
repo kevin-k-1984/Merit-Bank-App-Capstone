@@ -10,13 +10,12 @@ import com.meritamerica.MeritBankAppCapstone.models.CDAccount;
 import com.meritamerica.MeritBankAppCapstone.models.CDOffering;
 import com.meritamerica.MeritBankAppCapstone.repository.CDAccountRepository;
 import com.meritamerica.MeritBankAppCapstone.repository.CDOfferRepository;
-import springfox.documentation.annotations.ApiIgnore;
 
 @Service
 public class CDAccountService {
 
 	@Autowired
-	private BankService bankService;
+	private AccountHolderService accountHolderService;
 	@Autowired
 	private CDAccountRepository cdAccountRepository;
 	@Autowired
@@ -29,7 +28,7 @@ public class CDAccountService {
 		cdAccount.setInterestRate(actual_offer.getInterestRate());
 		cdAccount.setCdOffering(actual_offer);
 		
-		AccountHolder ah = this.bankService.getAccountHolderById(account_id);
+		AccountHolder ah = this.accountHolderService.getAccountHolderById(account_id);
 		ah.getCdAccounts().add(cdAccount);
 		cdAccount.setAccountHolder(ah);
 		
@@ -37,7 +36,7 @@ public class CDAccountService {
 	}
 
 	public AccountHolder addCDAccount(long account_id, CDAccount cdAccount) {
-		AccountHolder ah = this.bankService.getAccountHolderById(account_id);
+		AccountHolder ah = this.accountHolderService.getAccountHolderById(account_id);
 		cdAccount.setAccountHolder(ah);
 		ah.getCdAccounts().add(cdAccount);
 		return this.cdAccountRepository.save(cdAccount).getAccountHolder();
@@ -48,7 +47,7 @@ public class CDAccountService {
 	}
 	
 	public List<CDAccount> getCDAccountsForId(long id){
-		List<CDAccount> result = this.cdAccountRepository.findByAccountHolder(this.bankService.getAccountHolderById(id));
+		List<CDAccount> result = this.cdAccountRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		return result;
 	}
 }

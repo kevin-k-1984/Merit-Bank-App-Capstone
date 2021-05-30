@@ -10,13 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
-import com.meritamerica.MeritBankAppCapstone.services.BankService;
+import com.meritamerica.MeritBankAppCapstone.services.AccountHolderService;
 
 @RestController
 public class AccountHolderController {
 	
 	@Autowired
-	private BankService bankService;
+	private AccountHolderService accountHolderService;
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 	@Autowired
@@ -26,18 +26,18 @@ public class AccountHolderController {
 	 @PostMapping("/AccountHolders")
 	 @ResponseStatus(HttpStatus.CREATED)
 	 public AccountHolder addAccountHolder(@RequestBody AccountHolder accountHolder) {
-		return this.bankService.addAccountHolder(accountHolder);
+		return this.accountHolderService.addAccountHolder(accountHolder);
 	}
 	
 	// ----- GETs -----
 	@GetMapping("/AccountHolders")
 	public List<AccountHolder> getListOfAccountHolders() {
-		return this.bankService.getAccountHolders();
+		return this.accountHolderService.getAccountHolders();
 	}
 		
 	@GetMapping("/AccountHolders/{id}")
 	public AccountHolder getAccountHolderById(@PathVariable long id) {
-		return this.bankService.getAccountHolderById(id);
+		return this.accountHolderService.getAccountHolderById(id);
 	}
 
 	@GetMapping("/Me")

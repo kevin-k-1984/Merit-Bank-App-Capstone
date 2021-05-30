@@ -13,7 +13,7 @@ import com.meritamerica.MeritBankAppCapstone.repository.CheckingAccountRepositor
 public class CheckingAccountService {
 
 	@Autowired
-	private BankService bankService;
+	private AccountHolderService accountHolderService;
 	@Autowired
 	private CheckingAccountRepository checkingAccountRepository;
 
@@ -22,13 +22,13 @@ public class CheckingAccountService {
 	}
 
 	public AccountHolder addCheckingAccount(long id, CheckingAccount checkingAccount) {
-		checkingAccount.setAccountHolder(this.bankService.getAccountHolderById(id));
+		checkingAccount.setAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		checkingAccount.getAccountHolder().getCheckingAccounts().add(checkingAccount);
 		return this.checkingAccountRepository.save(checkingAccount).getAccountHolder();
 	}
 
 	public List<CheckingAccount> getCheckingAccountsForId(long id) {
-		List<CheckingAccount> result = this.checkingAccountRepository.findByAccountHolder(this.bankService.getAccountHolderById(id));
+		List<CheckingAccount> result = this.checkingAccountRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		return result;
 	}
 	

@@ -14,7 +14,7 @@ import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.repository.AccountHolderRepository;
 
 @Service
-public class BankService {
+public class AccountHolderService {
 
 	@Autowired
 	private AccountHolderRepository accountHolderRepository;
@@ -23,7 +23,7 @@ public class BankService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public BankService() { }
+	public AccountHolderService() { }
 
 	public AccountHolder addAccountHolder(AccountHolder accountHolder) throws UsernameNotFoundException {
 		// extract data from account holder

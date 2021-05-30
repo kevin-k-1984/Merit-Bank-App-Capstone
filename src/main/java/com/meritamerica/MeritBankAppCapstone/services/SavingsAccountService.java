@@ -13,7 +13,7 @@ import com.meritamerica.MeritBankAppCapstone.repository.SavingsAccountRepository
 public class SavingsAccountService {
 
 	@Autowired
-	private BankService bankService;
+	private AccountHolderService accountHolderService;
 	@Autowired
 	private SavingsAccountRepository savingsAccountRepository;
 
@@ -22,13 +22,13 @@ public class SavingsAccountService {
 	}
 
 	public AccountHolder addSavingsAccount(long id, SavingsAccount savingsAccount) {
-		savingsAccount.setAccountHolder(this.bankService.getAccountHolderById(id));
+		savingsAccount.setAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		savingsAccount.getAccountHolder().getSavingsAccounts().add(savingsAccount);
 		return this.savingsAccountRepository.save(savingsAccount).getAccountHolder();
 	}
 
 	public List<SavingsAccount> getSavingsAccountsForId(long id) {
-		List<SavingsAccount> result = this.savingsAccountRepository.findByAccountHolder(this.bankService.getAccountHolderById(id));
+		List<SavingsAccount> result = this.savingsAccountRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		return result;
 	}
 }
