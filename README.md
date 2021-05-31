@@ -2,11 +2,9 @@
 
 ## Documentation
 
-Click [here](http://localhost:8080/swagger-ui/) to access the API Documentation while running the project: 
+Click [here](http://localhost:8080/swagger-ui/) to access the API Documentation while the project is running.
 
-The project uses H2 database for persistance with the following credentials: 
-
-Link: http://localhost:8080/h2-console/
+Click [here](http://localhost:8080/h2-console/) to access the H2 database used for persistance while the project is running and use the following credentials. 
 
 -- | --
 ----- | ------
