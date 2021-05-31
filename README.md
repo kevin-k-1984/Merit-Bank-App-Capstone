@@ -15,7 +15,7 @@ Click [here](http://localhost:8080/h2-console/) to access the H2 database used f
 Username | admin
 Password | admin
 
-### High-level
+### High-level Diagram
 ![image of high level](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/High-Level%20Architecture.png)
 
 ### Entity Relationship Diagram
