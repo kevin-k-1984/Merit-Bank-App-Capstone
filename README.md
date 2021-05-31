@@ -26,3 +26,6 @@ Click [here](https://dbdiagram.io/d/60b51417b29a09603d17551a) to access the ERD 
 
 ![package controllers](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20controllers.png) 
 
+> Models
+
+![package models](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20models.png)
