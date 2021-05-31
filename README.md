@@ -16,3 +16,7 @@ Username | admin
 Password | admin
 
 ### High-level
+
+### Entity Relationship Diagram
+
+Click [here](https://dbdiagram.io/d/60b51417b29a09603d17551a) to access the ERD created using dbdiagram.io.
