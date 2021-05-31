@@ -29,3 +29,23 @@ Click [here](https://dbdiagram.io/d/60b51417b29a09603d17551a) to access the ERD 
 > Models
 
 ![package models](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20models.png)
+
+> Repositories
+
+![package repository](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20repository.png)
+
+> Services
+
+![package services](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20services.png)
+
+> Exceptions
+
+![package exceptions](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20exceptions.png)
+
+> Security
+
+![package Security](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20Security.png)
+
+> Application
+
+![application](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/Package%20models.png)
