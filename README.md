@@ -1,5 +1,7 @@
 # Merit-Bank-App-Capstone
 
+## Documentation
+
 Use the following link to access the API Documentation while running the project: 
 
 Link: http://localhost:8080/swagger-ui/
