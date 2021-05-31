@@ -1,6 +1,6 @@
 # Merit-Bank-App-Capstone
 
-## Documentation
+# Documentation
 
 ### High-level Diagram
 ![image of high level](https://github.com/kevin-k-1984/Merit-Bank-App-Capstone/blob/master/Images/High-Level%20Architecture.png)
