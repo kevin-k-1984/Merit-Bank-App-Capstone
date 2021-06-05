@@ -3,6 +3,7 @@ package com.meritamerica.MeritBankAppCapstone.controllers;
 import com.meritamerica.MeritBankAppCapstone.Security.JwtUtil;
 import com.meritamerica.MeritBankAppCapstone.models.AuthenticationRequest;
 import com.meritamerica.MeritBankAppCapstone.models.AuthenticationResponse;
+import com.meritamerica.MeritBankAppCapstone.models.MyUserDetails;
 import com.meritamerica.MeritBankAppCapstone.models.User;
 import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
 import io.swagger.annotations.ApiOperation;
@@ -41,12 +42,11 @@ public class AuthenticationController {
             throw new Exception("incorrect username or password", e);
         }
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+        final MyUserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getRole()));
     }
 
     @PostMapping("/authenticate/CreateUser")

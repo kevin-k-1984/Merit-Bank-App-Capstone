@@ -14,12 +14,14 @@ public class MyUserDetails implements UserDetails {
     private String username;
     private String password;
     private boolean active;
+    private String role;
     private List<GrantedAuthority> authorities;
 
     public MyUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.active = user.isActive();
+        this.role = user.getRole();
         this.authorities = Arrays.stream(user.getRole().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -38,6 +40,10 @@ public class MyUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return this.username;
+    }
+
+    public String getRole() {
+        return this.role;
     }
 
     @Override
