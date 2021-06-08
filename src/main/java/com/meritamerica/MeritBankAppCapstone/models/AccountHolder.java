@@ -9,44 +9,39 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Entity(name = "AccountHolders")
-@Table(name = "accountHolders")
-@ApiIgnore
-public class AccountHolder implements Comparable<AccountHolder> {
+@Entity()
+public class AccountHolder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_holders_id")
     private long id;
 
-    @NotEmpty(message = "Please Enter First Name")
     private String firstName;
-    
     private String middleName;
-    
-    @NotEmpty(message = "Please Enter Last Name")
     private String lastName;
-    
-    @NotEmpty(message = "Please Enter SSN")
-    @Size(min = 9, max = 11)
     private String ssn;
 
-//    @JsonIgnore
-    @OneToOne(mappedBy = "accountHolder")
+    @JsonIgnore
+    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
     private ContactDetails contact;
 
-//    @JsonIgnore
-    @OneToOne(mappedBy = "accountHolder")
+    @JsonIgnore
+    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CheckingAccount> checkingAccounts = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SavingsAccount> savingsAccounts = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountHolder", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CDAccount> cdAccounts = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IRAAccount> iraAccounts = new ArrayList<>();
     
     public AccountHolder() {}
 
@@ -121,6 +116,14 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		this.cdAccounts = cdAccounts;
 	}
 
+    public List<IRAAccount> getIraAccounts() {
+        return iraAccounts;
+    }
+
+    public void setIraAccounts(List<IRAAccount> iraAccounts) {
+        this.iraAccounts = iraAccounts;
+    }
+
     public ContactDetails getContact() {
         return contact;
     }
@@ -136,11 +139,5 @@ public class AccountHolder implements Comparable<AccountHolder> {
     public void setUser(User user) {
         this.user = user;
     }
-
-    @Override
-	public int compareTo(AccountHolder o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
 

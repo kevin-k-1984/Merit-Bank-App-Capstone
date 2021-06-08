@@ -28,7 +28,6 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     public User StoreUser(User user) {
-        if (!user.getRole().equals("ADMIN")) user.setRole("ROLE_ACCOUNTHOLDER");
         return userRepository.save(user);
     }
 

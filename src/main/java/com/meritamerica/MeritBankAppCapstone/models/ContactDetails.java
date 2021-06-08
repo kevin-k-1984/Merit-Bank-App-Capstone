@@ -13,14 +13,18 @@ public class ContactDetails {
 	private long id;
 	
 	private String email;
-	
 	private String phone;
 
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 	AccountHolder accountHolder;
 	
 	public ContactDetails() {}
+
+	public ContactDetails(String email, String phone) {
+		this.email = email;
+		this.phone = phone;
+	}
 
 	public long getId() {
 		return id;

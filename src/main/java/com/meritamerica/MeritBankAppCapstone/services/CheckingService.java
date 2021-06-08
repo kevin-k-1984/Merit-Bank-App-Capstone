@@ -7,28 +7,28 @@ import org.springframework.stereotype.Service;
 
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.CheckingAccount;
-import com.meritamerica.MeritBankAppCapstone.repository.CheckingAccountRepository;
+import com.meritamerica.MeritBankAppCapstone.repository.CheckingRepository;
 
 @Service
-public class CheckingAccountService {
+public class CheckingService {
 
 	@Autowired
 	private AccountHolderService accountHolderService;
 	@Autowired
-	private CheckingAccountRepository checkingAccountRepository;
+	private CheckingRepository checkingRepository;
 
 	public List<CheckingAccount> getCheckingAccounts() {
-		return this.checkingAccountRepository.findAll();
+		return this.checkingRepository.findAll();
 	}
 
 	public AccountHolder addCheckingAccount(long id, CheckingAccount checkingAccount) {
 		checkingAccount.setAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		checkingAccount.getAccountHolder().getCheckingAccounts().add(checkingAccount);
-		return this.checkingAccountRepository.save(checkingAccount).getAccountHolder();
+		return this.checkingRepository.save(checkingAccount).getAccountHolder();
 	}
 
 	public List<CheckingAccount> getCheckingAccountsForId(long id) {
-		List<CheckingAccount> result = this.checkingAccountRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
+		List<CheckingAccount> result = this.checkingRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		return result;
 	}
 	

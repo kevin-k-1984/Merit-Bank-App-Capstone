@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.CheckingAccount;
 
-public interface CheckingAccountRepository extends JpaRepository<CheckingAccount, Long>{
+public interface CheckingRepository extends JpaRepository<CheckingAccount, Long>{
 
 	public List<CheckingAccount> findByAccountHolder(AccountHolder accountHolder);
 }

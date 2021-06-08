@@ -4,13 +4,13 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name = "CheckingAccounts")
-@Table(name = "checkingAccounts")
+@Entity
 public class CheckingAccount extends BankAccount {
 
+
+//	@JoinColumn
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "account_holders_id")
     private AccountHolder accountHolder;
 	
 	public CheckingAccount() {}

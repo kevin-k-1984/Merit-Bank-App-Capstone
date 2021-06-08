@@ -16,20 +16,20 @@ import com.meritamerica.MeritBankAppCapstone.models.CDOffering;
 import com.meritamerica.MeritBankAppCapstone.services.CDOfferingsService;
 
 @RestController
-public class CDOfferingsController {
+public class CdOfferingsController {
 
 	@Autowired
 	private CDOfferingsService cdOfferingsService;
 
 	// ----- Posts -----
-	@PostMapping("/CDOfferings")
+	@PostMapping("/admin/CDOfferings")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CDOffering addCDOffering(@RequestBody CDOffering cdOffering) {
 		return this.cdOfferingsService.addCDOffering(cdOffering);
 	}
 
 	// ----- Gets -----
-	@GetMapping("/CDOfferings")
+	@GetMapping("/user/CDOfferings")
 	public List<CDOffering> getCDOfferings(){
 		return cdOfferingsService.getCDOfferings();
 	}

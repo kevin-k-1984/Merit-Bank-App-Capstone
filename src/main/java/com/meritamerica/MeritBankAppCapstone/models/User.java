@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User")
 public class User {
 
     @Id
@@ -18,7 +17,7 @@ public class User {
     private String role;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private AccountHolder accountHolder;
 
     public User(){}

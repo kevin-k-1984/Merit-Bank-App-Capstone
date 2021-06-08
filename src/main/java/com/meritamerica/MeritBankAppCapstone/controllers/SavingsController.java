@@ -10,46 +10,46 @@ import org.springframework.web.bind.annotation.*;
 
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.SavingsAccount;
-import com.meritamerica.MeritBankAppCapstone.services.SavingsAccountService;
+import com.meritamerica.MeritBankAppCapstone.services.SavingsService;
 
 @RestController
-public class SavingsAccountController {
+public class SavingsController {
 
 	@Autowired
-	private SavingsAccountService savingsAccountService;
+	private SavingsService savingsService;
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 	@Autowired
 	private JwtUtil jwtUtil;
 	
 	// ----- POSTs -----
-	@PostMapping(value = "/AccountHolders/{id}/SavingsAccount")
+	@PostMapping(value = "/user/AccountHolders/{id}/SavingsAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addSavingsAccount(@PathVariable long id, @RequestBody SavingsAccount savingsAccount) {
-		return this.savingsAccountService.addSavingsAccount(id, savingsAccount);
+		return this.savingsService.addSavingsAccount(id, savingsAccount);
 	}
 
-	@PostMapping(value = "/Me/SavingsAccount")
+	@PostMapping(value = "/user/SavingsAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addSavingsAccount(@RequestHeader("authorization") String auth) {
-		return this.savingsAccountService.addSavingsAccount(
+		return this.savingsService.addSavingsAccount(
 				this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getId(),
 				new SavingsAccount()
 		);
 	}
 	
 	// ----- GETs ------
-	@GetMapping("/AccountHolders/SavingsAccounts")
+	@GetMapping("/user/AccountHolders/SavingsAccounts")
 	public List<SavingsAccount> getSavingsAccounts(){
-		return savingsAccountService.getSavingsAccounts();
+		return savingsService.getSavingsAccounts();
 	}
 	
-	@GetMapping(value = "/AccountHolders/{id}/SavingsAccounts")
+	@GetMapping(value = "/user/AccountHolders/{id}/SavingsAccounts")
 	public List<SavingsAccount> getSavingsAccountsForId(@PathVariable long id){
-		return savingsAccountService.getSavingsAccountsForId(id);
+		return savingsService.getSavingsAccountsForId(id);
 	}
 
-	@GetMapping("/Me/SavingsAccounts")
+	@GetMapping("/user/SavingsAccounts")
 	public List<SavingsAccount> getSavingsAccountsForUser(@RequestHeader("authorization") String auth) {
 		return this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getSavingsAccounts();
 	}

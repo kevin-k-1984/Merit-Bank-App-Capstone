@@ -6,24 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meritamerica.MeritBankAppCapstone.models.CDOffering;
-import com.meritamerica.MeritBankAppCapstone.repository.CDOfferRepository;
+import com.meritamerica.MeritBankAppCapstone.repository.CdOfferingRepository;
 
 @Service
 public class CDOfferingsService {
 	
 	@Autowired
-	private CDOfferRepository cdOfferRepository;
+	private CdOfferingRepository cdOfferingRepository;
 
 	public CDOffering addCDOffering(CDOffering cdOffering) {
-		return this.cdOfferRepository.save(cdOffering);
+		return this.cdOfferingRepository.save(cdOffering);
 	}
 
 	public List<CDOffering> getCDOfferings() {
-		return this.cdOfferRepository.findAll();
+		return this.cdOfferingRepository.findAll();
 	}
 	
 	public CDOffering getCDOfferingById(long id) {
-		return this.cdOfferRepository.findById(id).orElse(null);
+		return this.cdOfferingRepository.findById(id).orElse(null);
 	}
 
 }

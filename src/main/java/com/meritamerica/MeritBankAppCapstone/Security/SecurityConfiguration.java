@@ -32,12 +32,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/authenticate/CreateUser").hasRole("ADMIN")
-                .antMatchers("/AccountHolders/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/CDOfferings").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/CDOfferings").hasAnyRole("ACCOUNTHOLDERS", "ADMIN")
-                .antMatchers("/Me/**").hasRole("ACCOUNTHOLDER")
-                .antMatchers("/authenticate").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/authenticate", "/authenticate/CreateUser").permitAll()
                 .and().headers().frameOptions().sameOrigin()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

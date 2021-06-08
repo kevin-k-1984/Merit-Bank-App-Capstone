@@ -7,28 +7,28 @@ import org.springframework.stereotype.Service;
 
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.SavingsAccount;
-import com.meritamerica.MeritBankAppCapstone.repository.SavingsAccountRepository;
+import com.meritamerica.MeritBankAppCapstone.repository.SavingsRepository;
 
 @Service
-public class SavingsAccountService {
+public class SavingsService {
 
 	@Autowired
 	private AccountHolderService accountHolderService;
 	@Autowired
-	private SavingsAccountRepository savingsAccountRepository;
+	private SavingsRepository savingsRepository;
 
 	public List<SavingsAccount> getSavingsAccounts() {
-		return this.savingsAccountRepository.findAll();
+		return this.savingsRepository.findAll();
 	}
 
 	public AccountHolder addSavingsAccount(long id, SavingsAccount savingsAccount) {
 		savingsAccount.setAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		savingsAccount.getAccountHolder().getSavingsAccounts().add(savingsAccount);
-		return this.savingsAccountRepository.save(savingsAccount).getAccountHolder();
+		return this.savingsRepository.save(savingsAccount).getAccountHolder();
 	}
 
 	public List<SavingsAccount> getSavingsAccountsForId(long id) {
-		List<SavingsAccount> result = this.savingsAccountRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
+		List<SavingsAccount> result = this.savingsRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
 		return result;
 	}
 }

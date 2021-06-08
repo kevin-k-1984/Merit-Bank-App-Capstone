@@ -9,7 +9,7 @@ import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.SavingsAccount;
 
 //@RepositoryRestResource(path = "SavingsAccounts")
-public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, Long>{
+public interface SavingsRepository extends JpaRepository<SavingsAccount, Long>{
 
 	public List<SavingsAccount> findByAccountHolder(AccountHolder accountHolder);
 }

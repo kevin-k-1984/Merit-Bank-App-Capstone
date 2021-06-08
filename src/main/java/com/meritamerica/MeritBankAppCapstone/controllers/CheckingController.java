@@ -10,46 +10,46 @@ import org.springframework.web.bind.annotation.*;
 
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.CheckingAccount;
-import com.meritamerica.MeritBankAppCapstone.services.CheckingAccountService;
+import com.meritamerica.MeritBankAppCapstone.services.CheckingService;
 
 @RestController
-public class CheckingAccountController {
+public class CheckingController {
 
 	@Autowired
-	private CheckingAccountService checkingAccountService;
+	private CheckingService checkingService;
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 	@Autowired
 	private JwtUtil jwtUtil;
 	
 	// ----- POSTs -----
-	@PostMapping(value = "/AccountHolders/{id}/CheckingAccount")
+	@PostMapping(value = "/user/AccountHolders/{id}/CheckingAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addCheckingAccount(@PathVariable long id, @RequestBody CheckingAccount checkingAccount) {
-		return this.checkingAccountService.addCheckingAccount(id, checkingAccount);
+		return this.checkingService.addCheckingAccount(id, checkingAccount);
 	}
 
-	@PostMapping("/Me/CheckingAccount")
+	@PostMapping("/user/CheckingAccount")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addCheckingAccount(@RequestHeader("authorization") String auth){
-		return this.checkingAccountService.addCheckingAccount(
+		return this.checkingService.addCheckingAccount(
 				this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getId(),
 				new CheckingAccount()
 		);
 	}
 	
 	// ----- GETs ------
-	@GetMapping("/AccountHolders/CheckingAccounts")
+	@GetMapping("/user/AccountHolders/CheckingAccounts")
 	public List<CheckingAccount> getCheckingAccounts(){
-		return checkingAccountService.getCheckingAccounts();
+		return checkingService.getCheckingAccounts();
 	}
 	
-	@GetMapping(value = "/AccountHolders/{id}/CheckingAccounts")
+	@GetMapping(value = "/user/AccountHolders/{id}/CheckingAccounts")
 	public List<CheckingAccount> getCheckingAccountsForId(@PathVariable long id){
-		return checkingAccountService.getCheckingAccountsForId(id);
+		return checkingService.getCheckingAccountsForId(id);
 	}
 
-	@GetMapping("/Me/CheckingAccounts")
+	@GetMapping("/user/CheckingAccounts")
 	public List<CheckingAccount> getCheckingAccountsForUser(@RequestHeader("authorization") String auth) {
 		return this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getCheckingAccounts();
 	}
