@@ -40,7 +40,7 @@ public class AccountController {
                 accountHolderDTO.getFirstName(),
                 accountHolderDTO.getMiddleName(),
                 accountHolderDTO.getLastName(),
-                accountHolderDTO.getSSN()
+                accountHolderDTO.getSsn()
         );
 
         acc.setUser(user);
@@ -70,18 +70,18 @@ public class AccountController {
         private String firstName;
         private String middleName;
         private String lastName;
-        private String SSN;
+        private String ssn;
         private String email;
         private String phone;
 
         public AccountHolderDTO() {
         }
 
-        public AccountHolderDTO(String firstName, String middleName, String lastName, String SSN, String email, String phone) {
+        public AccountHolderDTO(String firstName, String middleName, String lastName, String ssn, String email, String phone) {
             this.firstName = firstName;
             this.middleName = middleName;
             this.lastName = lastName;
-            this.SSN = SSN;
+            this.ssn = ssn;
             this.email = email;
             this.phone = phone;
         }
@@ -110,12 +110,12 @@ public class AccountController {
             this.lastName = lastName;
         }
 
-        public String getSSN() {
-            return SSN;
+        public String getSsn() {
+            return ssn;
         }
 
-        public void setSSN(String SSN) {
-            this.SSN = SSN;
+        public void setSsn(String ssn) {
+            this.ssn = ssn;
         }
 
         public String getEmail() {
