@@ -33,7 +33,7 @@ public class CheckingController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addCheckingAccount(@RequestHeader("authorization") String auth){
 		return this.checkingService.addCheckingAccount(
-				this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getId(),
+				this.jwtUtil.getUserFromToken(auth).getAccountHolder().getId(),
 				new CheckingAccount()
 		);
 	}
@@ -51,6 +51,6 @@ public class CheckingController {
 
 	@GetMapping("/user/CheckingAccounts")
 	public List<CheckingAccount> getCheckingAccountsForUser(@RequestHeader("authorization") String auth) {
-		return this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getCheckingAccounts();
+		return this.jwtUtil.getUserFromToken(auth).getAccountHolder().getCheckingAccounts();
 	}
 }

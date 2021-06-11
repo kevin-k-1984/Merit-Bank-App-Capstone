@@ -1,14 +1,13 @@
 package com.meritamerica.MeritBankAppCapstone.Security;
 
+import com.meritamerica.MeritBankAppCapstone.exceptions.UserNotFoundException;
 import com.meritamerica.MeritBankAppCapstone.models.User;
-import com.meritamerica.MeritBankAppCapstone.repository.UserRepository;
 import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,8 +20,6 @@ public class JwtUtil {
 
     private final String SECRET_KEY = "secret";
 
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private MyUserDetailsService userDetailsService;
 
@@ -63,7 +60,7 @@ public class JwtUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public User GetUserFromToken(String token) throws UsernameNotFoundException {
+    public User getUserFromToken(String token) throws UserNotFoundException {
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
         }

@@ -2,7 +2,6 @@ package com.meritamerica.MeritBankAppCapstone.controllers;
 
 import com.meritamerica.MeritBankAppCapstone.Security.JwtUtil;
 import com.meritamerica.MeritBankAppCapstone.models.*;
-import com.meritamerica.MeritBankAppCapstone.services.AccountHolderService;
 import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +24,7 @@ public class AuthenticationController {
     //---------- authentication -------------
 
     @PostMapping("/authenticate")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
@@ -42,7 +42,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getRole()));
     }
 
-    @PostMapping("/authenticate/CreateUser")
+    @PostMapping("/authenticate/createUser")
     @ResponseStatus(HttpStatus.CREATED)
     public User CreateUser(@RequestBody User user) {
         return this.userDetailsService.StoreUser(user);

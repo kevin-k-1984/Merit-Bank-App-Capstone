@@ -33,7 +33,7 @@ public class SavingsController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addSavingsAccount(@RequestHeader("authorization") String auth) {
 		return this.savingsService.addSavingsAccount(
-				this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getId(),
+				this.jwtUtil.getUserFromToken(auth).getAccountHolder().getId(),
 				new SavingsAccount()
 		);
 	}
@@ -51,6 +51,6 @@ public class SavingsController {
 
 	@GetMapping("/user/SavingsAccounts")
 	public List<SavingsAccount> getSavingsAccountsForUser(@RequestHeader("authorization") String auth) {
-		return this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getSavingsAccounts();
+		return this.jwtUtil.getUserFromToken(auth).getAccountHolder().getSavingsAccounts();
 	}
 }

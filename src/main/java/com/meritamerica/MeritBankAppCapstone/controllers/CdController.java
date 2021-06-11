@@ -33,7 +33,7 @@ public class CdController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addCDAccount(@RequestHeader("authorization") String auth) {
 		return this.cdService.addCDAccount(
-				this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getId(),
+				this.jwtUtil.getUserFromToken(auth).getAccountHolder().getId(),
 				new CDAccount()
 		);
 	}
@@ -51,6 +51,6 @@ public class CdController {
 
 	@GetMapping("/user/CDAccounts")
 	public List<CDAccount> getCDAccountsForUser(@RequestHeader("authorization") String auth) {
-		return this.jwtUtil.GetUserFromToken(auth).getAccountHolder().getCdAccounts();
+		return this.jwtUtil.getUserFromToken(auth).getAccountHolder().getCdAccounts();
 	}
 }

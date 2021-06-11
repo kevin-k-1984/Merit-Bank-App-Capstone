@@ -3,14 +3,12 @@ package com.meritamerica.MeritBankAppCapstone.controllers;
 import java.util.List;
 
 import com.meritamerica.MeritBankAppCapstone.Security.JwtUtil;
-import com.meritamerica.MeritBankAppCapstone.exceptions.NotFoundException;
+import com.meritamerica.MeritBankAppCapstone.exceptions.UserNotFoundException;
 import com.meritamerica.MeritBankAppCapstone.models.ContactDetails;
 import com.meritamerica.MeritBankAppCapstone.models.User;
-import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
@@ -31,7 +29,7 @@ public class AccountController {
             @RequestHeader("authorization") String auth,
             @RequestBody AccountHolderDTO accountHolderDTO) {
 
-        User user = this.jwtUtil.GetUserFromToken(auth);
+        User user = this.jwtUtil.getUserFromToken(auth);
 
         ContactDetails contact = new ContactDetails(
                 accountHolderDTO.getEmail(),
@@ -58,8 +56,12 @@ public class AccountController {
     }
 
     @GetMapping("/user/AccountHolder")
-    public AccountHolder getAccountHolder(@RequestHeader("authorization") String auth) throws UsernameNotFoundException {
-        return this.jwtUtil.GetUserFromToken(auth).getAccountHolder();
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public AccountHolder getAccountHolder(@RequestHeader("authorization") String auth) throws UserNotFoundException {
+        User user = this.jwtUtil.getUserFromToken(auth);
+        if (user.getAccountHolder() == null) throw new UserNotFoundException("User does not have account information");
+
+        return user.getAccountHolder();
     }
 
     // ----- DTO -----
