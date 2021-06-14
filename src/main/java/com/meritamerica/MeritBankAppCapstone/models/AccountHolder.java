@@ -21,7 +21,7 @@ public class AccountHolder {
     private String lastName;
     private String ssn;
 
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn
     @OneToOne(cascade = CascadeType.ALL)
     private ContactDetails contact;
