@@ -21,10 +21,8 @@ public class SavingsService {
 		return this.savingsRepository.findAll();
 	}
 
-	public AccountHolder addSavingsAccount(long id, SavingsAccount savingsAccount) {
-		savingsAccount.setAccountHolder(this.accountHolderService.getAccountHolderById(id));
-		savingsAccount.getAccountHolder().getSavingsAccounts().add(savingsAccount);
-		return this.savingsRepository.save(savingsAccount).getAccountHolder();
+	public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount) {
+		return this.savingsRepository.save(savingsAccount);
 	}
 
 	public List<SavingsAccount> getSavingsAccountsForId(long id) {

@@ -4,27 +4,17 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name = "SavingsAccounts")
-@Table(name = "savingsAccounts")
+@Entity
 public class SavingsAccount extends BankAccount {
     
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "account_holders_id")
-    protected AccountHolder accountHolder;
+    private AccountHolder accountHolder;
 	
     public SavingsAccount() {}
 
 	public SavingsAccount(double balance) {
 		super(balance);
-	}
-
-	public SavingsAccount(double balance, double interestRate) {
-		super(balance, interestRate);
-	}
-
-	public SavingsAccount(double balance, double interestRate, java.util.Date openedDate) {
-		super(balance, interestRate, openedDate);
 	}
 
 	public AccountHolder getAccountHolder() {
