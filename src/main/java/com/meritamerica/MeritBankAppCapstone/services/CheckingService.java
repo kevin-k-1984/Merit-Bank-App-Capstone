@@ -21,10 +21,8 @@ public class CheckingService {
 		return this.checkingRepository.findAll();
 	}
 
-	public AccountHolder addCheckingAccount(long id, CheckingAccount checkingAccount) {
-		checkingAccount.setAccountHolder(this.accountHolderService.getAccountHolderById(id));
-		checkingAccount.getAccountHolder().getCheckingAccounts().add(checkingAccount);
-		return this.checkingRepository.save(checkingAccount).getAccountHolder();
+	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) {
+		return this.checkingRepository.save(checkingAccount);
 	}
 
 	public List<CheckingAccount> getCheckingAccountsForId(long id) {

@@ -48,14 +48,6 @@ public abstract class BankAccount {
 		this.id = id;
 	}
 
-//	public AccountHolder getAccountHolder() {
-//		return accountHolder;
-//	}
-//
-//	public void setAccountHolder(AccountHolder accountHolder) {
-//		this.accountHolder = accountHolder;
-//	}
-
 	public double getInterestRate() {
 		return this.interestRate;
 	}

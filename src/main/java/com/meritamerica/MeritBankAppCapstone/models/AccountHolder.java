@@ -31,7 +31,7 @@ public class AccountHolder {
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "accountHolder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CheckingAccount> checkingAccounts = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
