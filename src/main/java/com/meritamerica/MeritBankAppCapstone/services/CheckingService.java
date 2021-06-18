@@ -1,19 +1,17 @@
 package com.meritamerica.MeritBankAppCapstone.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
 import com.meritamerica.MeritBankAppCapstone.models.CheckingAccount;
 import com.meritamerica.MeritBankAppCapstone.repository.CheckingRepository;
 
 @Service
 public class CheckingService {
 
-	@Autowired
-	private AccountHolderService accountHolderService;
 	@Autowired
 	private CheckingRepository checkingRepository;
 
@@ -25,11 +23,7 @@ public class CheckingService {
 		return this.checkingRepository.save(checkingAccount);
 	}
 
-	public List<CheckingAccount> getCheckingAccountsForId(long id) {
-		List<CheckingAccount> result = this.checkingRepository.findByAccountHolder(this.accountHolderService.getAccountHolderById(id));
-		return result;
+	public void deleteCheckingAccount(long id) {
+		this.checkingRepository.deleteById(id);
 	}
-	
-	
-	
 }

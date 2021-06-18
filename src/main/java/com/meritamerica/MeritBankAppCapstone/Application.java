@@ -1,5 +1,7 @@
 package com.meritamerica.MeritBankAppCapstone;
 
+import com.meritamerica.MeritBankAppCapstone.repository.CdOfferingRepository;
+import com.meritamerica.MeritBankAppCapstone.repository.CdRepository;
 import com.meritamerica.MeritBankAppCapstone.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +24,8 @@ public class Application {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
 		
-		UserRepository repo = context.getBean(UserRepository.class);
+		UserRepository adminRepo = context.getBean(UserRepository.class);
+		CdOfferingRepository cdOfferingRepo = context.getBean(CdOfferingRepository.class);
 
 		User user_admin = new User();
 		user_admin.setUsername("admin");
@@ -30,7 +33,15 @@ public class Application {
 		user_admin.setActive(true);
 		user_admin.setRole("ROLE_ADMIN");
 		
-		repo.save(user_admin);
+		adminRepo.save(user_admin);
+
+		CDOffering cdOffering01 = new CDOffering(10, 2.5);
+		CDOffering cdOffering02 = new CDOffering(5, 3.5);
+		CDOffering cdOffering03 = new CDOffering(3, 5);
+
+		cdOfferingRepo.save(cdOffering01);
+		cdOfferingRepo.save(cdOffering02);
+		cdOfferingRepo.save(cdOffering03);
 		
 	}
 

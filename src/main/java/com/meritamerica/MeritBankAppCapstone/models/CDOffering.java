@@ -1,5 +1,7 @@
 package com.meritamerica.MeritBankAppCapstone.models;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,9 @@ public class CDOffering {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cdOffering", orphanRemoval = true)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "cdOffering", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CDAccount> cdAccounts = new ArrayList<>();
 	
     protected int term;

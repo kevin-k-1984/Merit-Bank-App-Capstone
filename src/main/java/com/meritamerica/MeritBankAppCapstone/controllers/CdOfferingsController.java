@@ -22,14 +22,14 @@ public class CdOfferingsController {
 	private CDOfferingsService cdOfferingsService;
 
 	// ----- Posts -----
-	@PostMapping("/admin/CDOfferings")
+	@PostMapping("/admin/addCdOffering")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CDOffering addCDOffering(@RequestBody CDOffering cdOffering) {
 		return this.cdOfferingsService.addCDOffering(cdOffering);
 	}
 
 	// ----- Gets -----
-	@GetMapping("/user/CDOfferings")
+	@GetMapping("/user/cdOfferings")
 	public List<CDOffering> getCDOfferings(){
 		return cdOfferingsService.getCDOfferings();
 	}

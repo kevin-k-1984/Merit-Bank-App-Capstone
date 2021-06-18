@@ -3,8 +3,8 @@ package com.meritamerica.MeritBankAppCapstone.controllers;
 import java.util.List;
 
 import com.meritamerica.MeritBankAppCapstone.Security.JwtUtil;
+import com.meritamerica.MeritBankAppCapstone.models.CheckingAccount;
 import com.meritamerica.MeritBankAppCapstone.models.User;
-import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +36,15 @@ public class SavingsController {
 
 		return user.getAccountHolder();
 	}
+
+	@PostMapping("/user/deleteSavingsAccount")
+	@ResponseStatus(HttpStatus.OK)
+	public AccountHolder deleteCheckingAccount(@RequestHeader("authorization") String auth, @RequestBody SavingsAccountDTO savingsAccountDTO) {
+		User user = this.jwtUtil.getUserFromToken(auth);
+		this.savingsService.deleteSavingsAccount(savingsAccountDTO.getId());
+		user.getAccountHolder().getSavingsAccounts().clear();
+		return user.getAccountHolder();
+	}
 	
 	// ----- GETs ------
 	@GetMapping("/admin/savingsAccounts")
@@ -52,12 +61,14 @@ public class SavingsController {
 	public static class SavingsAccountDTO {
 
 		private double balance;
+		private long id;
 
 		public SavingsAccountDTO() {
 		}
 
-		public SavingsAccountDTO(double balance) {
+		public SavingsAccountDTO(double balance, long id) {
 			this.balance = balance;
+			this.id = id;
 		}
 
 		public double getBalance() {
@@ -66,6 +77,14 @@ public class SavingsController {
 
 		public void setBalance(double balance) {
 			this.balance = balance;
+		}
+
+		public long getId() {
+			return id;
+		}
+
+		public void setId(long id) {
+			this.id = id;
 		}
 	}
 }
