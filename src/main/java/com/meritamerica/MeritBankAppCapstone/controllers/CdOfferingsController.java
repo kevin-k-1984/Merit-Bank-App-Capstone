@@ -30,6 +30,7 @@ public class CdOfferingsController {
 
 	// ----- Gets -----
 	@GetMapping("/user/cdOfferings")
+	@ResponseStatus(HttpStatus.OK)
 	public List<CDOffering> getCDOfferings(){
 		return cdOfferingsService.getCDOfferings();
 	}
