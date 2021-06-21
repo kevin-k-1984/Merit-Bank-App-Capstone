@@ -1,6 +1,6 @@
 package com.meritamerica.MeritBankAppCapstone.models;
 
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

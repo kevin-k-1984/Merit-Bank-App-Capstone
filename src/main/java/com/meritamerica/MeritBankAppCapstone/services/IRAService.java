@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 public class IRAService {
 
     @Autowired
-    private AccountHolderService accountHolderService;
-    @Autowired
     private IRARepository iraRepository;
 
     public IRAAccount addIraAccount(IRAAccount iraAccount){

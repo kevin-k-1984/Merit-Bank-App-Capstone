@@ -10,11 +10,18 @@ public class CheckingAccount extends BankAccount {
 	@JsonIgnore
 	@ManyToOne
     private AccountHolder accountHolder;
+
+	private boolean isDBA;
 	
 	public CheckingAccount() {}
 
 	public CheckingAccount(double balance) {
 		super(balance);
+	}
+
+	public CheckingAccount(double balance, boolean isDBA) {
+		super(balance);
+		this.isDBA = isDBA;
 	}
 
 	public AccountHolder getAccountHolder() {
@@ -23,5 +30,13 @@ public class CheckingAccount extends BankAccount {
 
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
+	}
+
+	public boolean isDBA() {
+		return isDBA;
+	}
+
+	public void setDBA(boolean DBA) {
+		isDBA = DBA;
 	}
 }

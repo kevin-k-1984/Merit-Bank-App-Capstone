@@ -27,7 +27,7 @@ public class CheckingController {
 	public AccountHolder addCheckingAccount(@RequestHeader("authorization") String auth, @RequestBody CheckingAccountDTO checkingAccountDTO) {
 
 		User user = this.jwtUtil.getUserFromToken(auth);
-		CheckingAccount checkingAccount = new CheckingAccount(checkingAccountDTO.getBalance());
+		CheckingAccount checkingAccount = new CheckingAccount(checkingAccountDTO.getBalance(), checkingAccountDTO.getIsDBA());
 
 		user.getAccountHolder().getCheckingAccounts().add(checkingAccount);
 		checkingAccount.setAccountHolder(user.getAccountHolder());
@@ -42,8 +42,7 @@ public class CheckingController {
 	public AccountHolder deleteCheckingAccount(@RequestHeader("authorization") String auth, @RequestBody CheckingAccountDTO checkingAccountDTO) {
 		User user = this.jwtUtil.getUserFromToken(auth);
 		this.checkingService.deleteCheckingAccount(checkingAccountDTO.getId());
-		user.getAccountHolder().getCheckingAccounts().clear();
-		return user.getAccountHolder();
+		return this.jwtUtil.getUserFromToken(auth).getAccountHolder();
 	}
 	
 	// ----- GETs ------
@@ -62,13 +61,15 @@ public class CheckingController {
 
 		private double balance;
 		private long id;
+		private boolean isDBA;
 
 		public CheckingAccountDTO() {
 		}
 
-		public CheckingAccountDTO(double balance, long id) {
+		public CheckingAccountDTO(double balance, long id, boolean isDBA) {
 			this.balance = balance;
 			this.id = id;
+			this.isDBA = isDBA;
 		}
 
 		public double getBalance() {
@@ -85,6 +86,14 @@ public class CheckingController {
 
 		public void setId(long id) {
 			this.id = id;
+		}
+
+		public boolean getIsDBA() {
+			return this.isDBA;
+		}
+
+		public void setIsDBA(boolean isDBA) {
+			this.isDBA = isDBA;
 		}
 	}
 }

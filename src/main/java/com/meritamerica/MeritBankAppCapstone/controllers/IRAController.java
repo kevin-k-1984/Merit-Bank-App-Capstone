@@ -22,21 +22,20 @@ public class IRAController {
 
     // ------- POSTs ---------
 
-    @PostMapping("/user/addIRAAccount")
+    @PostMapping(value = "/user/addIRAAccount")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolder addIRAAccount(@RequestHeader("authorization") String auth, @RequestBody IRAAccountDTO iraAccountDTO) throws RuntimeException {
+    public AccountHolder addIRAAccount(@RequestHeader("authorization") String auth, @RequestBody IRAAccountDTO iraAccountDTO) {
         User user = this.jwtUtil.getUserFromToken(auth);
         IRAAccount iraAccount = new IRAAccount(iraAccountDTO.getBalance(), iraAccountDTO.getType());
 
-        boolean hasType = false;
         for (IRAAccount acc : user.getAccountHolder().getIraAccounts()) {
             if (acc.getType().equals(iraAccountDTO.getType())){
                 throw new RuntimeException();
             }
         }
 
-        iraAccount.setAccountHolder(user.getAccountHolder());
         user.getAccountHolder().getIraAccounts().add(iraAccount);
+        iraAccount.setAccountHolder(user.getAccountHolder());
 
         this.iraService.addIraAccount(iraAccount);
 
@@ -54,12 +53,14 @@ public class IRAController {
 
         private double balance;
         private String type;
+        private long id;
 
         public IRAAccountDTO() {}
 
-        public IRAAccountDTO(double balance, String type) {
+        public IRAAccountDTO(double balance, String type, long id) {
             this.balance = balance;
             this.type = type;
+            this.id = id;
         }
 
         public double getBalance() {
@@ -76,6 +77,14 @@ public class IRAController {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
         }
     }
 }

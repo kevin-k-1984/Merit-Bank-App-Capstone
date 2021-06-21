@@ -42,8 +42,7 @@ public class SavingsController {
 	public AccountHolder deleteCheckingAccount(@RequestHeader("authorization") String auth, @RequestBody SavingsAccountDTO savingsAccountDTO) {
 		User user = this.jwtUtil.getUserFromToken(auth);
 		this.savingsService.deleteSavingsAccount(savingsAccountDTO.getId());
-		user.getAccountHolder().getSavingsAccounts().clear();
-		return user.getAccountHolder();
+		return this.jwtUtil.getUserFromToken(auth).getAccountHolder();
 	}
 	
 	// ----- GETs ------
