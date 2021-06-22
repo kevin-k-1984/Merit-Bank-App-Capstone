@@ -16,7 +16,7 @@ public class CDOffering {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cdOffering", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<CDAccount> cdAccounts = new ArrayList<>();
+	private List<CDAccount> cdAccounts;
 	
     protected int term;
     protected double interestRate;

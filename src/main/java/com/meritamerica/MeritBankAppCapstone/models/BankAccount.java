@@ -14,11 +14,8 @@ public abstract class BankAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@Min(value = 0)
-	@Max(value = 25000)
-    protected double balance;
 
+    protected double balance;
     protected Date openedDate;
 	protected double interestRate;
 	

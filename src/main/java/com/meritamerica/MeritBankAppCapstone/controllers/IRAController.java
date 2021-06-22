@@ -44,9 +44,9 @@ public class IRAController {
 
     @PostMapping("/user/deleteIRAAccount")
     @ResponseStatus(HttpStatus.OK)
-    public boolean deleteIRAAccount(@RequestHeader("authorization") String auth, @RequestBody IRAAccount iraAccount) {
-
-        return false;
+    public AccountHolder deleteIRAAccount(@RequestHeader("authorization") String auth, @RequestBody IRAAccountDTO iraAccountDTO) {
+        this.iraService.deleteIraAccount(iraAccountDTO.getId());
+        return this.jwtUtil.getUserFromToken(auth).getAccountHolder();
     }
 
     public static class IRAAccountDTO {

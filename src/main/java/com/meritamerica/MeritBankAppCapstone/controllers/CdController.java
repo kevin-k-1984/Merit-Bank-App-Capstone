@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.meritamerica.MeritBankAppCapstone.Security.JwtUtil;
 import com.meritamerica.MeritBankAppCapstone.models.AccountHolder;
+import com.meritamerica.MeritBankAppCapstone.models.CDOffering;
 import com.meritamerica.MeritBankAppCapstone.models.User;
 import com.meritamerica.MeritBankAppCapstone.services.CDOfferingsService;
 import com.meritamerica.MeritBankAppCapstone.services.MyUserDetailsService;
@@ -25,19 +26,28 @@ public class CdController {
 	private JwtUtil jwtUtil;
 	
 	// ----- POSTs -----
-	@PostMapping(value = "/user/CDAccount/{offer_id}")
+	@PostMapping(value = "/user/addCdAccount/{offer_id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AccountHolder addCDAccount(@RequestHeader("authorization") String auth, @PathVariable long offer_id, @RequestBody CdAccountDTO cdAccountDTO) {
 
 		User user = this.jwtUtil.getUserFromToken(auth);
-		CDAccount cdAccount = new CDAccount(cdAccountDTO.getBalance(), this.cdOfferingsService.getCDOfferingById(cdAccountDTO.getCdOfferingId()));
+		CDOffering offering = this.cdOfferingsService.getCDOfferingById(offer_id);
+		CDAccount cdAccount = new CDAccount(cdAccountDTO.getBalance(), offering);
 
+		offering.getCDAccounts().add(cdAccount);
 		user.getAccountHolder().getCdAccounts().add(cdAccount);
 		cdAccount.setAccountHolder(user.getAccountHolder());
 
 		this.cdService.addCDAccount(cdAccount);
 
 		return user.getAccountHolder();
+	}
+
+	@PostMapping(value = "/user/deleteCdAccount")
+	@ResponseStatus(HttpStatus.OK)
+	public AccountHolder deleteCdAccount(@RequestHeader("authorization") String auth, @RequestBody CdAccountDTO cdAccountDTO) {
+		this.cdService.deleteCdAccount(cdAccountDTO.getId());
+		return this.jwtUtil.getUserFromToken(auth).getAccountHolder();
 	}
 	
 	// ----- GETs -----
@@ -54,11 +64,10 @@ public class CdController {
 	// ----- DTO -----
 	public static class CdAccountDTO {
 
+		private long id;
 		private double balance;
-		private long cdOfferingId;
 
-		public CdAccountDTO() {
-		}
+		public CdAccountDTO() {}
 
 		public CdAccountDTO(double balance) {
 			this.balance = balance;
@@ -72,12 +81,12 @@ public class CdController {
 			this.balance = balance;
 		}
 
-		public long getCdOfferingId() {
-			return cdOfferingId;
+		public long getId() {
+			return id;
 		}
 
-		public void setCdOfferingId(long cdOfferingId) {
-			this.cdOfferingId = cdOfferingId;
+		public void setId(long id) {
+			this.id = id;
 		}
 	}
 }

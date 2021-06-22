@@ -25,13 +25,10 @@ public class CdService {
 		return this.cdRepository.save(cdAccount).getAccountHolder();
 	}
 
-//	public AccountHolder addCDAccount(long account_id, CDAccount cdAccount) {
-//		AccountHolder ah = this.accountHolderService.getAccountHolderById(account_id);
-//		cdAccount.setAccountHolder(ah);
-//		ah.getCdAccounts().add(cdAccount);
-//		return this.cdRepository.save(cdAccount).getAccountHolder();
-//	}
-	
+	public void deleteCdAccount(long id){
+		this.cdRepository.deleteById(id);
+	}
+
 	public List<CDAccount> getCDAccounts() {
 		return this.cdRepository.findAll();
 	}

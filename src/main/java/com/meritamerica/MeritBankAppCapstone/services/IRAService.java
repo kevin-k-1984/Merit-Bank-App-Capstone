@@ -15,5 +15,7 @@ public class IRAService {
         return this.iraRepository.save(iraAccount);
     }
 
-
+    public void deleteIraAccount(long id) {
+        this.iraRepository.deleteById(id);
+    }
 }

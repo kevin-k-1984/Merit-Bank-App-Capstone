@@ -40,7 +40,6 @@ public class CheckingController {
 	@PostMapping("/user/deleteCheckingAccount")
 	@ResponseStatus(HttpStatus.OK)
 	public AccountHolder deleteCheckingAccount(@RequestHeader("authorization") String auth, @RequestBody CheckingAccountDTO checkingAccountDTO) {
-		User user = this.jwtUtil.getUserFromToken(auth);
 		this.checkingService.deleteCheckingAccount(checkingAccountDTO.getId());
 		return this.jwtUtil.getUserFromToken(auth).getAccountHolder();
 	}
