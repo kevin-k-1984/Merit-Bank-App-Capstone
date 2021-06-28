@@ -64,6 +64,8 @@ public class AccountController {
         return user.getAccountHolder();
     }
 
+    public void DoSomething() {}
+
     // ----- DTO -----
     public static class AccountHolderDTO {
 
